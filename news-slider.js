@@ -6,7 +6,7 @@ window.addEvent('domready',function(){
 	var nS8 = new noobSlide({
 		box: $('box8'),
 		items: $$('#box8 h3'),
-		size: 210,
+		size: 240,
 		interval: $('wpnsw_interval').get('value'),
 		autoPlay: true,
 		mode: 'vertical',
