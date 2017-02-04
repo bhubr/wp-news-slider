@@ -77,7 +77,7 @@ function wpnsw_load_scripts() {
 			wp_enqueue_script( 'mootools', plugins_url( '/includes/mootools-1.2.2-core-nc.js', __FILE__) );
 		if( !wp_script_is( 'noobslide' ) )
 			wp_enqueue_script( 'noobslide', plugins_url( '/includes/_class.noobSlide.packed.js', __FILE__), array( 'mootools' ), '3.11.10' );
-		wp_enqueue_script( 'news_slider_js', plugins_url( 'news-slider.js', __FILE__), array( 'mootools', 'noobslide' ) );
+		wp_enqueue_script( 'news_slider_js', plugins_url( 'news-slider.js?ts=' . time(), __FILE__), array( 'mootools', 'noobslide' ) );
 	}
 
 }
@@ -86,7 +86,7 @@ function wpnsw_load_scripts() {
 function wpnsw_load_styles() {
 	$current_user = wp_get_current_user();
 	if (!is_admin() )
-		wp_enqueue_style('news_slider_style', plugins_url('/news-slider.css', __FILE__) );
+		wp_enqueue_style('news_slider_style', plugins_url('/news-slider.css?ts=' . time(), __FILE__) );
 }
 
 add_action( 'wp_print_scripts', 'wpnsw_load_scripts' );
@@ -180,7 +180,7 @@ function wpnsw_shiba_filter( $post_id, $content, $thumbnail, $show_thumbs ) {
 
 	$thumb_str = "";
 	if( !empty( $thumbnail ) && $show_thumbs ) {
-			$thumb_str = "<div style='width:$thumbnail[1]px;' class='sliderthumb'><img alt='thumb' src='".$thumbnail[0]."' width='$thumbnail[1]' height='$thumbnail[2]' /></div>";
+			$thumb_str = "<div class='sliderthumb'><img alt='thumb' src='".$thumbnail[0]."' /></div>";
 			$ie7marginleft = 2 + $thumbnail[1];
 			$ie7width = 284 - $thumbnail[1];
 			$thumb_str .= "<!--[if lt IE 7]><div class='slidercontent' style='margin-left: {$ie7marginleft}px; width: {$ie7width}px;'><![endif]-->\n";
@@ -237,9 +237,9 @@ function post_html_excerpt( $string ) {
  */
 class WP_Widget_News_Slider extends WP_Widget {
 
-	function WP_Widget_News_Slider() {
+	function __construct() {
 		$widget_ops = array('classname' => 'widget_news_slider', 'description' => __( "The most recent posts on your site") );
-		$this->WP_Widget('news-slider', __( 'News Slider', 'wpnsw' ), $widget_ops);
+		parent::__construct('news-slider', __( 'News Slider', 'wpnsw' ), $widget_ops);
 		$this->alt_option_name = 'widget_news_slider';
 
 		add_action( 'save_post', array(&$this, 'flush_widget_cache') );
@@ -287,18 +287,18 @@ class WP_Widget_News_Slider extends WP_Widget {
 
 					<?php 	global $post; while ($query->have_posts()) : $query->the_post(); ?>
 
-						<div style="font-size:11px;" class="excerpt">
+						<div class="excerpt">
 							<p class="buttons">
-                            	<span class="prev"><?php _e( '&lt;&lt; Previous', 'wpnsw' ); ?></span>
-                                <span class="next"><?php _e( 'Next &gt;&gt;', 'wpnsw' ); ?></span>
-                            </p>
+              	<span class="prev"><?php _e( '&lt;&lt; Previous', 'wpnsw' ); ?></span>
+                  <span class="next"><?php _e( 'Next &gt;&gt;', 'wpnsw' ); ?></span>
+              </p>
 							<?php
 							echo "<h3><a href='". get_permalink() . "' title='" . esc_attr(get_the_title() ? get_the_title() : get_the_ID()) . "'>" . ( get_the_title() ? get_the_title() : get_the_ID() ) . "</a></h3>\n";
 							$thumbnail = wp_get_attachment_image_src(get_post_thumbnail_id(), 'thumbnail');
 							$content = get_the_content();
 							$content_and_thumb = wpnsw_shiba_filter( $post->ID, $content, $thumbnail, $instance['show_thumbs'] );
-							$content = post_html_excerpt( $content_and_thumb[0] );
-							echo $content_and_thumb[1] . $content . "<br /><a href='" . get_permalink() . "'>Lire la suite...</a>\n"; 
+							$content = '<div class="thumb-content">' . post_html_excerpt( $content_and_thumb[0] );
+							echo $content_and_thumb[1] . $content . "<br /><a href='" . get_permalink() . "'>Lire la suite...</a></div>\n"; 
 							if( $thumbnail && !empty( $instance['show_thumbs'] ) ) echo "<!--[if lt IE 7]></div><![endif]-->\n";
 							?>
 							
