@@ -1,0 +1,35 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Benoit Hubert <benoithubert@yahoo.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Slide interval (seconds):"
+msgstr "Intervalle (en secondes) :"
+
+msgid "Turn widget title into a link"
+msgstr "Transformer le titre du widget en lien"
+
+msgid "Show post thumbnails"
+msgstr "Afficher les images à la une"
+
+msgid "Stop"
+msgstr "Arrêt"
+
+msgid "Play &gt;"
+msgstr "Lecture automatique &gt;"
+
+msgid "News Slider"
+msgstr "Défileur d'Actualités"
+
+msgid "&lt;&lt; Previous"
+msgstr "&lt;&lt; Précédent"
+
+msgid "Next &gt;&gt;"
+msgstr "Prochain &gt;&gt;"
+
