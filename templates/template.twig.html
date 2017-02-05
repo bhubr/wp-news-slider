@@ -9,7 +9,7 @@
           <span class="prev"><?php _e( '&lt;&lt; Previous', 'wpnsw' ); ?></span>
           <span class="next"><?php _e( 'Next &gt;&gt;', 'wpnsw' ); ?></span>
         </p>
-        <h3><a href='{{post.permalink}}' title='{{post.title}}'>{{post.title}}</a></h3>
+        <h3><a href='{{post.permalink}}' title='{{post.title|raw}}'>{{post.title|raw}}</a></h3>
         <div class="thumb-image">{{post.thumbnail|raw}}</div>
         <div class="thumb-content">{{post.excerpt|raw}}</div>
       </div><!-- END excerpt -->

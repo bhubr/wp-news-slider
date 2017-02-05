@@ -120,11 +120,11 @@ function wpnsw_localize() {
 function wpnsw_load_scripts() {
     if( !is_admin() ) {
         //wp_enqueue_script('jquery');
-        if( !wp_script_is( 'mootools' ) )
-            wp_enqueue_script( 'mootools', plugins_url( '/includes/mootools-1.2.2-core-nc.js', __FILE__) );
-        if( !wp_script_is( 'noobslide' ) )
-            wp_enqueue_script( 'noobslide', plugins_url( '/includes/_class.noobSlide.packed.js', __FILE__), array( 'mootools' ), '3.11.10' );
-        wp_enqueue_script( 'news_slider_js', plugins_url( 'news-slider.js?ts=' . time(), __FILE__), array( 'mootools', 'noobslide' ) );
+        // if( !wp_script_is( 'mootools' ) )
+        //     wp_enqueue_script( 'mootools', plugins_url( '/includes/mootools-1.2.2-core-nc.js', __FILE__) );
+        // if( !wp_script_is( 'noobslide' ) )
+        //     wp_enqueue_script( 'noobslide', plugins_url( '/includes/_class.noobSlide.packed.js', __FILE__), array( 'mootools' ), '3.11.10' );
+        wp_enqueue_script( 'news_slider_js', plugins_url( 'news-slider.js?ts=' . time(), __FILE__), array( 'jquery' ) );
     }
 
 }
