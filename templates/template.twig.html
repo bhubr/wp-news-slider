@@ -11,7 +11,7 @@
         </p>
         <h3><a href='{{post.permalink}}' title='{{post.title}}'>{{post.title}}</a></h3>
         <div class="thumb-image">{{post.thumbnail|raw}}</div>
-        <div class="thumb-content">{{post.content|raw}}</div>
+        <div class="thumb-content">{{post.excerpt|raw}}</div>
       </div><!-- END excerpt -->
     {% endfor %}
     </div><!-- END thumbs-wrapper -->

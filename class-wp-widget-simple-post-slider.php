@@ -57,7 +57,7 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
             return array(
                 'title'     => $post->post_title,
                 'permalink' => get_the_permalink($post),
-                'content'   => $post->post_content,
+                'excerpt'   => post_html_excerpt($post->post_content),
                 'thumbnail' => get_the_post_thumbnail($post, 'thumbnail')
             );
         }, $recent_posts);

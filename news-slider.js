@@ -61,7 +61,7 @@
       }
 
 
-//      $currentBefore.parent().animate({ top: (- currentImgIndex * 240) + 'px' }, 300);
+      //$currentBefore.parent().animate({ top: (- currentImgIndex * 250) + 'px' }, 300);
     
 
     }
