@@ -1,4 +1,6 @@
 <?php
+require 'htmLawed.php';
+
 function wpnsw_mceplugin_add_button($buttons)
 {
     array_push($buttons, "separator", "wpnsw_mceplugin");
@@ -16,26 +18,77 @@ function wpnsw_mceplugin_register($plugin_array)
 
 /**
  * Close all open xhtml tags at the end of the string
+ * Sources: http://stackoverflow.com/questions/3810230/close-open-html-tags-in-a-string
  * @param string $html
  * @param array  $tags_to_strip
  * @return string
- * @author Milian <mail@mili.de> and Benoît Hubert
+ * @author Milian <mail@mili.de> and @alexn on SO, and Benoît Hubert
  */
-if( !function_exists( 'close_and_strip_tags' ) ) {
-    function close_and_strip_tags($html, $tags_to_strip = array()) {
-        $autoclosing_tags_pattern = '#<(meta|img|br|hr|input)?[^>]* />#iU';
+function get_autoclosing_tags($html) {
+    $autoclosing_tags_pattern = '#<(meta|img|br|hr|input)[^>]* ?/>#iU';
+    $success = preg_match_all($autoclosing_tags_pattern, $html, $result);
+    return $success ? $result[1] : [];
+}
 
-        $dont_close_tags = ['input', 'img'];
+function get_html_without_autoclosing_tags($html) {
+    $autoclosing_tags_pattern = '#<(meta|img|br|hr|input)[^>]* ?/>#iU';
+    return preg_replace($autoclosing_tags_pattern, '', $html);
+//    $autoclosing_tags = get_autoclosing_tags($html);
+}
+
+if( !function_exists( 'close_non_autoclosing_tags' ) ) {
+    function close_non_autoclosing_tags($html) {
         // put all opened tags into an array
-        // <(?!meta|img|br|hr|input\b)\b([a-z]+)(?: .*)?(?<![/|/ ])>
-        preg_match_all('#<([a-z]+)(?: .*)?(?<![/|/ ])>#iU', $html, $result);
+        // <([a-z]+)(?: .*)?(?<![/|/ ])>
+        preg_match_all('#<(?!meta|img|br|hr|input\b)\b([a-z]+)(?: .*)?(?<![/|/ ])>#iU', $html, $result);
         $openedtags = $result[1];
+
         // put all closed tags into an array
         preg_match_all('#</([a-z]+)>#iU', $html, $result);
         $closedtags = $result[1];
+
+        $len_opened = count($openedtags);
+
+        // all tags are closed
+        if (count($closedtags) == $len_opened) {
+            return $html;
+        }
+        $openedtags = array_reverse($openedtags);
+
+        // close tags
+        for ($i = 0 ; $i < $len_opened ; $i++) {
+            if (!in_array($openedtags[$i], $closedtags) ){
+                // if(! in_array($openedtags[$i], $dont_close_tags)) {
+                    // echo "append " . $openedtags[$i] . "\n";
+                    $html .= '</'.$openedtags[$i].'>';
+                // }
+            } else {
+                unset($closedtags[array_search($openedtags[$i], $closedtags)]);
+            }
+        }
+        return $html;
+    }
+
+}
+
+if( !function_exists( 'close_and_strip_tags' ) ) {
+    function close_and_strip_tags($html_src, $tags_to_strip = array()) {
+//        $html = htmLawed($html_src);
+        $html = get_html_without_autoclosing_tags($html_src);
+
+        $html_closed = close_non_autoclosing_tags($html);
+        // put all opened tags into an array
+        // <([a-z]+)(?: .*)?(?<![/|/ ])>
+        preg_match_all('#<(?!meta|img|br|hr|input\b)\b([a-z]+)(?: .*)?(?<![/|/ ])>#iU', $html, $result);
+        $openedtags = $result[1];
+
+        // put all closed tags into an array
+        preg_match_all('#</([a-z]+)>#iU', $html, $result);
+        $closedtags = $result[1];
+
         // var_dump($closedtags);
         $len_opened = count($openedtags);
-var_dump($openedtags);
+//var_dump($openedtags);
         // all tags are closed
         if (count($closedtags) == $len_opened) {
             return $html;
@@ -44,27 +97,27 @@ var_dump($openedtags);
         // close tags
         for ($i = 0 ; $i < $len_opened ; $i++) {
             if (!in_array($openedtags[$i], $closedtags) ){
-                if(! in_array($openedtags[$i], $dont_close_tags)) {
+                // if(! in_array($openedtags[$i], $dont_close_tags)) {
                     // echo "append " . $openedtags[$i] . "\n";
                     $html .= '</'.$openedtags[$i].'>';
-                }
+                // }
             } else {
                 unset($closedtags[array_search($openedtags[$i], $closedtags)]);
             }
         }
-        var_dump($openedtags);
-        for ($i = 0 ; $i < $len_opened ; $i++) {
-            // echo $openedtags[$i];
-            if (in_array($openedtags[$i], $tags_to_strip)){
-                echo "FOUND " . $openedtags[$i] . "\n";
-                $pattern = in_array($openedtags[$i], $dont_close_tags) !== false ?
-                    '/<' . $openedtags[$i] . '.* \/>/' :
-                    '/<' . $openedtags[$i] . '>.*
-                    <\/' . $openedtags[$i] . '>/';
-                 echo "PATTN:" . $pattern . "\n";
-                $html = preg_replace($pattern, "", $html);
-            }
-        }
+        // var_dump($openedtags);
+        // for ($i = 0 ; $i < $len_opened ; $i++) {
+        //     // echo $openedtags[$i];
+        //     if (in_array($openedtags[$i], $tags_to_strip)){
+        //         echo "FOUND " . $openedtags[$i] . "\n";
+        //         $pattern = in_array($openedtags[$i], $dont_close_tags) !== false ?
+        //             '/<' . $openedtags[$i] . '.* \/>/' :
+        //             '/<' . $openedtags[$i] . '>.*
+        //             <\/' . $openedtags[$i] . '>/';
+        //          echo "PATTN:" . $pattern . "\n";
+        //         $html = preg_replace($pattern, "", $html);
+        //     }
+        // }
         return $html;
     }
 }
