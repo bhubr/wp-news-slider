@@ -23,14 +23,19 @@ function wpnsw_mceplugin_register($plugin_array)
  */
 if( !function_exists( 'close_and_strip_tags' ) ) {
     function close_and_strip_tags($html, $tags_to_strip = array()) {
+        $autoclosing_tags_pattern = '#<(meta|img|br|hr|input)?[^>]* />#iU';
+
+        $dont_close_tags = ['input', 'img'];
         // put all opened tags into an array
+        // <(?!meta|img|br|hr|input\b)\b([a-z]+)(?: .*)?(?<![/|/ ])>
         preg_match_all('#<([a-z]+)(?: .*)?(?<![/|/ ])>#iU', $html, $result);
         $openedtags = $result[1];
         // put all closed tags into an array
         preg_match_all('#</([a-z]+)>#iU', $html, $result);
         $closedtags = $result[1];
+        // var_dump($closedtags);
         $len_opened = count($openedtags);
-
+var_dump($openedtags);
         // all tags are closed
         if (count($closedtags) == $len_opened) {
             return $html;
@@ -38,16 +43,26 @@ if( !function_exists( 'close_and_strip_tags' ) ) {
         $openedtags = array_reverse($openedtags);
         // close tags
         for ($i = 0 ; $i < $len_opened ; $i++) {
-            if (!in_array($openedtags[$i], $closedtags)){
-                $html .= '</'.$openedtags[$i].'>';
+            if (!in_array($openedtags[$i], $closedtags) ){
+                if(! in_array($openedtags[$i], $dont_close_tags)) {
+                    // echo "append " . $openedtags[$i] . "\n";
+                    $html .= '</'.$openedtags[$i].'>';
+                }
             } else {
                 unset($closedtags[array_search($openedtags[$i], $closedtags)]);
             }
         }
+        var_dump($openedtags);
         for ($i = 0 ; $i < $len_opened ; $i++) {
-            echo $openedtags[$i];
+            // echo $openedtags[$i];
             if (in_array($openedtags[$i], $tags_to_strip)){
-                echo "FOUND " . $openedtags[$i];
+                echo "FOUND " . $openedtags[$i] . "\n";
+                $pattern = in_array($openedtags[$i], $dont_close_tags) !== false ?
+                    '/<' . $openedtags[$i] . '.* \/>/' :
+                    '/<' . $openedtags[$i] . '>.*
+                    <\/' . $openedtags[$i] . '>/';
+                 echo "PATTN:" . $pattern . "\n";
+                $html = preg_replace($pattern, "", $html);
             }
         }
         return $html;
