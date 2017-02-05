@@ -8,8 +8,11 @@ Among its features:
 
 # Todo
 
+- Put back buttons
 - Handle custom post types
 - Allow various instances
 - Full translation
 - More clean-up
 - WP Code Conventions (PHP&JS)
+- Build (minify CSS&JS) and package (remove unwanted files)
+- Re-enable Twig cache

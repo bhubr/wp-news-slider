@@ -53,7 +53,6 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
         ));
 
         $posts = array_map(function($post) {
-            //var_dump($post);
             return array(
                 'title'     => $post->post_title,
                 'permalink' => get_the_permalink($post),
@@ -61,8 +60,18 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
                 'thumbnail' => get_the_post_thumbnail($post, 'thumbnail')
             );
         }, $recent_posts);
-        // var_dump($posts);
-        echo $twig->render('template.twig.html', array('name' => 'Fabien', 'posts' => $posts));
+
+        $strings = array(
+            'stop' => __( 'Stop', 'wpnsw' ),
+            'play' => __( 'Play &gt;', 'wpnsw' ),
+            'prev' => __( '&lt;&lt; Previous', 'wpnsw' ),
+            'next' => __( 'Next &gt;&gt;', 'wpnsw' )
+        );
+        $view = array(
+            'posts' => $posts,
+            'str'   => $strings
+        );
+        echo $twig->render('template.twig.html', $view);
 
 
         echo $after_widget;

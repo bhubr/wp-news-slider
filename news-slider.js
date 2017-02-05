@@ -5,6 +5,7 @@
   	var $intervalInput = $('#wpnsw_interval');
   	var slideInterval;
   	var slideOrientation = 'vertical';
+  	var autoPlay = true;
 
   	if( $intervalInput.length === 0 ) {
   		console.log('No interval specified (missing #wpnsw_interval input). Using default (4 seconds)');
@@ -21,11 +22,16 @@
     var currentImgIndex = 0;
   	var totalHeight = 250;
 
-    function fadeImages() {
+    function fadeImages(imgIndex) {
       var $currentBefore = $( $thumbs[currentImgIndex] );
       var $currentAfter;
 
-      currentImgIndex++;
+      if(imgIndex) {
+      	currentImgIndex = imgIndex;
+      }
+      else {
+	      currentImgIndex++;
+      }
       if(currentImgIndex >= $thumbs.length) {
         currentImgIndex = 0;
       }
@@ -47,5 +53,15 @@
     setContainerHeight();
     $(window).on('resize', setContainerHeight);
 
+    $('.wp-sps-wrapper .numbered-btn').click( function() {
+    	fadeImages( $(this).data('idx') - 1 );
+    } );
+    $('.wp-sps-wrapper .stop-btn').click( function() {
+    	clearInterval(timer);
+    } );
+    $('.wp-sps-wrapper .play-btn').click( function() {
+    	fadeImages();
+    	timer = setInterval(fadeImages, slideInterval);
+    } );
   } );
 })(jQuery);

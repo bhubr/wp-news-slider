@@ -1,21 +1,29 @@
 <div class="wp-sps-wrapper">
   <input type="hidden" id="wpsps-options-{{id}}" value='{{jsonOptions}}' />
   {{numberedButtons}}
+  <p class='buttons' id='some{{id}}'>
+  {% for post in posts %}
+    <span class="numbered-btn" data-idx="{{ loop.index }}">{{ loop.index }}</span>
+  {% endfor %}
+  </p>
   <div class="mask">
     <div class="thumbs-wrapper">
     {% for post in posts %}
       <div class="excerpt">
         <p class="buttons">
-          <span class="prev"><?php _e( '&lt;&lt; Previous', 'wpnsw' ); ?></span>
-          <span class="next"><?php _e( 'Next &gt;&gt;', 'wpnsw' ); ?></span>
+          <span class="prev">{{ str.prev|raw }}</span>
+          <span class="next">{{ str.next|raw }}</span>
         </p>
-        <h3><a href='{{post.permalink}}' title='{{post.title|raw}}'>{{post.title|raw}}</a></h3>
-        <div class="thumb-image">{{post.thumbnail|raw}}</div>
-        <div class="thumb-content">{{post.excerpt|raw}}</div>
+        <h3><a href='{{post.permalink}}' title='{{ post.title|raw }}'>{{ post.title|raw }} ({{ loop.index }})</a></h3>
+        <div class="thumb-image">{{ post.thumbnail|raw }}</div>
+        <div class="thumb-content">{{ post.excerpt|raw }}</div>
       </div><!-- END excerpt -->
     {% endfor %}
     </div><!-- END thumbs-wrapper -->
   </div><!-- END mask -->
-  {{playStopButtons}}
+  <p class="buttons">
+    <span class="stop-btn">{{ str.stop|raw }}</span>
+    <span class="play-btn">{{ str.play|raw }}</span>
+  </p>
   {{numberedButtons}}
 </div><!-- END sample8 -->
