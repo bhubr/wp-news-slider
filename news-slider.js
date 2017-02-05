@@ -17,7 +17,7 @@
 	  		orientation: 'vertical',
 	  		autoplay: true
 	  	}, filteredOptions);
-	  	console.log(options);
+	  	console.log(instanceId, options);
 
 	    var $thumbs = $instance.find('.excerpt');
 	    var $firstThumb = $($thumbs[0]);
@@ -38,20 +38,23 @@
 	      if(currentImgIndex >= $thumbs.length) {
 	        currentImgIndex = 0;
 	      }
-	      console.log(instanceId, currentImgIndex, timer);
 	      $currentBefore.parent().animate({ top: (- currentImgIndex * totalHeight) + 'px' }, 350);
 	    }
 
 	    function setContainerHeight() {
 	    	var h3Height = $firstThumb.find('h3').outerHeight();
+	    	var buttonsHeight = $firstThumb.find('p.buttons').outerHeight();
 	    	var maxHeight = 0;
 	    	$thumbs.each( function(index, thumbEl) {
 	    		var contentHeight = $(thumbEl).find('.thumb-content').outerHeight();
 	    		if(contentHeight > maxHeight) maxHeight = contentHeight;
+	    		console.log(buttonsHeight,  h3Height, contentHeight, maxHeight, buttonsHeight + h3Height + contentHeight);
 	    	});
-	    	totalHeight = h3Height + maxHeight + 12;
-	    	$('.wp-sps-wrapper .mask').css('height', totalHeight);
-	    	$('.wp-sps-wrapper .thumbs-wrapper .excerpt').css('height', totalHeight);
+	    	totalHeight = buttonsHeight + h3Height + maxHeight;
+	    	console.log('total', totalHeight);
+
+	    	$instance.find('.mask').css('height', totalHeight);
+	    	$instance.find('.thumbs-wrapper .excerpt').css('height', totalHeight);
 	    }
 
 	    setContainerHeight();

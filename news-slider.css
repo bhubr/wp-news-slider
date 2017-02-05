@@ -6,7 +6,9 @@
 .wp-sps-wrapper .thumbs-wrapper{
 	position:absolute;
 }
-.wp-sps-wrapper .thumbs-wrapper {
+.wp-sps-wrapper .thumbs-wrapper h3 {
+	margin: 6px 0;
+	padding: 0;
 }
 .wp-sps-wrapper .thumbs-wrapper .excerpt{
 	margin-left: 2%;
