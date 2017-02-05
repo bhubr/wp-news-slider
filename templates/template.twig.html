@@ -1,6 +1,4 @@
-<div class="wp-sps-wrapper">
-  <input type="hidden" id="wpsps-options-{{id}}" value='{{jsonOptions}}' />
-  {{numberedButtons}}
+<div class="wp-sps-wrapper" id="wp-sps-{{ id }}" data-options='{{options|raw}}'>
   <p class='buttons' id='some{{id}}'>
   {% for post in posts %}
     <span class="numbered-btn" data-idx="{{ loop.index }}">{{ loop.index }}</span>
@@ -14,7 +12,7 @@
           <span class="prev">{{ str.prev|raw }}</span>
           <span class="next">{{ str.next|raw }}</span>
         </p>
-        <h3><a href='{{post.permalink}}' title='{{ post.title|raw }}'>{{ post.title|raw }} ({{ loop.index }})</a></h3>
+        <h3><a href='{{post.permalink}}' title='{{ post.title|raw }}'>{{ post.title|raw }}</a></h3>
         <div class="thumb-image">{{ post.thumbnail|raw }}</div>
         <div class="thumb-content">{{ post.excerpt|raw }}</div>
       </div><!-- END excerpt -->

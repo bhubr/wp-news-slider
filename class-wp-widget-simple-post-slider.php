@@ -68,12 +68,12 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
             'next' => __( 'Next &gt;&gt;', 'wpnsw' )
         );
         $view = array(
-            'posts' => $posts,
-            'str'   => $strings
+            'id'      => $this->id,
+            'posts'   => $posts,
+            'str'     => $strings,
+            'options' => json_encode($instance)
         );
         echo $twig->render('template.twig.html', $view);
-
-
         echo $after_widget;
 
         // Reset the global $the_post as this query will have stomped on it

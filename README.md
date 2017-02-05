@@ -8,11 +8,13 @@ Among its features:
 
 # Todo
 
-- Put back buttons
+- Replace Previous, Next, Stop, Play with icons (no need for i18n on frontend!)
+- ~~Put back buttons~~
 - Handle custom post types
-- Allow various instances
+- Allow various instances (use WP_Widget instance's id)
 - Full translation
 - More clean-up
 - WP Code Conventions (PHP&JS)
 - Build (minify CSS&JS) and package (remove unwanted files)
 - Re-enable Twig cache
+- Add a clearfix at the end of the thumb div
