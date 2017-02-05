@@ -1,4 +1,6 @@
 <?php
+require_once 'vendor/autoload.php';
+
 /**
  * WP_Widget_Simple_Post_Slider widget class
  */
@@ -44,41 +46,25 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
         echo $before_widget;
         if( !empty( $instance['title_is_link'] ) ) $title = convert_title_link( $title );
         if ( !empty( $title ) ) echo $before_title . $title . $after_title;
-         ?>
 
-        <div class="sample sample8">
-            <input type="hidden" id="wpnsw_interval" value="<?php echo( 1000 * (int)$instance['interval'] ); ?>" />
-            <?php echo get_numbered_buttons( $number, "handles8" ); ?>
-            <div class="mask1">
-                    <div id="box8">
+        $loader = new Twig_Loader_Filesystem(__DIR__ . '/templates');
+        $twig = new Twig_Environment($loader, array(
+            //'cache' => __DIR__ . '/compilation_cache',
+        ));
 
-                    <?php   global $post; while ($query->have_posts()) : $query->the_post(); ?>
+        $posts = array_map(function($post) {
+            //var_dump($post);
+            return array(
+                'title'     => $post->post_title,
+                'permalink' => get_the_permalink($post),
+                'content'   => $post->post_content,
+                'thumbnail' => get_the_post_thumbnail($post, 'thumbnail')
+            );
+        }, $recent_posts);
+        // var_dump($posts);
+        echo $twig->render('template.twig.html', array('name' => 'Fabien', 'posts' => $posts));
 
-                        <div class="excerpt">
-                            <p class="buttons">
-                <span class="prev"><?php _e( '&lt;&lt; Previous', 'wpnsw' ); ?></span>
-                  <span class="next"><?php _e( 'Next &gt;&gt;', 'wpnsw' ); ?></span>
-              </p>
-                            <?php
-                            echo "<h3><a href='". get_permalink() . "' title='" . esc_attr(get_the_title() ? get_the_title() : get_the_ID()) . "'>" . ( get_the_title() ? get_the_title() : get_the_ID() ) . "</a></h3>\n";
-                            $thumbnail = wp_get_attachment_image_src(get_post_thumbnail_id(), 'thumbnail');
-                            $content = get_the_content();
-                            $content_and_thumb = wpnsw_shiba_filter( $post->ID, $content, $thumbnail, $instance['show_thumbs'] );
-                            $content = '<div class="thumb-content">' . post_html_excerpt( $content_and_thumb[0] );
-                            echo $content_and_thumb[1] . $content . "<br /><a href='" . get_permalink() . "'>Lire la suite...</a></div>\n"; 
-                            if( $thumbnail && !empty( $instance['show_thumbs'] ) ) echo "<!--[if lt IE 7]></div><![endif]-->\n";
-                            ?>
-                            
-                        </div><!-- END excerpt -->
 
-                    <?php endwhile; ?>
-                    </div><!-- END box8 -->
-            </div><!-- END mask1 -->
-        <?php echo get_play_stop_buttons(); ?>
-        <?php echo get_numbered_buttons( $number, "handles8_more" ); ?>
-</div><!-- END sample8 -->
-
-<?php 
         echo $after_widget;
 
         // Reset the global $the_post as this query will have stomped on it

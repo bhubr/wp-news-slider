@@ -60,9 +60,10 @@
         currentImgIndex = 0;
       }
 
-      // $currentAfter = $( $thumbs[currentImgIndex] );
-      $currentBefore.parent().animate({ top: (- currentImgIndex * 240) + 'px' }, 300);
-      // $currentAfter.animate({ opacity: 1 }, 500);
+
+//      $currentBefore.parent().animate({ top: (- currentImgIndex * 240) + 'px' }, 300);
+    
+
     }
 
     function setContainerHeight() {

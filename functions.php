@@ -74,23 +74,30 @@ if( !function_exists( 'close_non_autoclosing_tags' ) ) {
 if( !function_exists( 'close_and_strip_tags' ) ) {
     function close_and_strip_tags($html_src, $tags_to_strip = array()) {
         $html = htmLawed($html_src);
-
+echo $html;
+        $autoclosing = get_autoclosing_tags($html);
         // put all opened tags into an array
         // <([a-z]+)(?: .*)?(?<![/|/ ])>
         preg_match_all('#<(?!meta|img|br|hr|input\b)\b([a-z]+)(?: .*)?(?<![/|/ ])>#iU', $html, $result);
-        $openedtags = $result[1];
+        $openedtags = array_merge($autoclosing, $result[1]);
+        $len_opened = count($openedtags);
 
         var_dump($openedtags);
         for ($i = 0 ; $i < $len_opened ; $i++) {
             // echo $openedtags[$i];
             if (in_array($openedtags[$i], $tags_to_strip)){
-                echo "FOUND " . $openedtags[$i] . "\n";
-                $pattern = in_array($openedtags[$i], $dont_close_tags) !== false ?
-                    '/<' . $openedtags[$i] . '.* \/>/' :
-                    '/<' . $openedtags[$i] . '>.*
-                    <\/' . $openedtags[$i] . '>/';
-                 echo "PATTN:" . $pattern . "\n";
-                $html = preg_replace($pattern, "", $html);
+                echo "\nFOUND " . $openedtags[$i] . "\n";
+                if( in_array($openedtags[$i], $autoclosing) !== false ) {
+                    $pattern = '/<' . $openedtags[$i] . '[^<]* \/>/';
+                    $replace = '';
+                }
+                else {
+                    $pattern = '/<' . $openedtags[$i] . '[^>]*>(.*)<\/' . $openedtags[$i] . '>/';
+                    $replace = '${1}';
+                }
+                echo "PATTN:" . $pattern . ",\nBEFORE: $html\n";
+                $html = preg_replace($pattern, $replace, $html);
+                echo "AFTER:  $html\n";
             }
         }
         return $html;
@@ -217,10 +224,10 @@ function wpnsw_shiba_filter( $post_id, $content, $thumbnail, $show_thumbs ) {
 
     $thumb_str = "";
     if( !empty( $thumbnail ) && $show_thumbs ) {
-            $thumb_str = "<div class='sliderthumb'><img alt='thumb alignleft' src='".$thumbnail[0]."' /></div>";
+            $thumb_str = "<div class='sliderthumb'><img class='my-alignleft' alt='thumb for ".basename($thumbnail[0])."' src='".$thumbnail[0]."' /></div>";
             $ie7marginleft = 2 + $thumbnail[1];
             $ie7width = 284 - $thumbnail[1];
-            $thumb_str .= "<!--[if lt IE 7]><div class='slidercontent' style='margin-left: {$ie7marginleft}px; width: {$ie7width}px;'><![endif]-->\n";
+            //$thumb_str .= "<!--[if lt IE 7]><div class='slidercontent' style='margin-left: {$ie7marginleft}px; width: {$ie7width}px;'><![endif]-->\n";
     }
 
     return array( preg_replace($pattern_to_replace, $replacement_a, $content ), $thumb_str ); 
