@@ -1,0 +1,21 @@
+<div class="wp-sps-wrapper">
+  <input type="hidden" id="wpsps-options-{{id}}" value='{{jsonOptions}}' />
+  {{numberedButtons}}
+  <div class="mask">
+    <div class="thumbs-wrapper">
+    {% for post in posts %}
+      <div class="excerpt">
+        <p class="buttons">
+          <span class="prev"><?php _e( '&lt;&lt; Previous', 'wpnsw' ); ?></span>
+          <span class="next"><?php _e( 'Next &gt;&gt;', 'wpnsw' ); ?></span>
+        </p>
+        <h3><a href='{{post.permalink}}' title='{{post.title}}'>{{post.title}}</a></h3>
+        <div class="thumb-image">{{post.thumbnail|raw}}</div>
+        <div class="thumb-content">{{post.content|raw}}</div>
+      </div><!-- END excerpt -->
+    {% endfor %}
+    </div><!-- END thumbs-wrapper -->
+  </div><!-- END mask -->
+  {{playStopButtons}}
+  {{numberedButtons}}
+</div><!-- END sample8 -->
