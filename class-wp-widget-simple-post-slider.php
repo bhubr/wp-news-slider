@@ -82,16 +82,16 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
 			);
 		}, $recent_posts );
 
-		$strings = array(
-			'stop' => __( 'Stop', 'wpnsw' ),
-			'play' => __( 'Play &gt;', 'wpnsw' ),
-			'prev' => __( '&lt;&lt; Previous', 'wpnsw' ),
-			'next' => __( 'Next &gt;&gt;', 'wpnsw' ),
-		);
+		// $strings = array(
+		// 	'stop' => __( 'Stop', 'wpnsw' ),
+		// 	'play' => __( 'Play &gt;', 'wpnsw' ),
+		// 	'prev' => __( '&lt;&lt; Previous', 'wpnsw' ),
+		// 	'next' => __( 'Next &gt;&gt;', 'wpnsw' ),
+		// );
 		$view = array(
 			'id'      => $this->id,
 			'posts'   => $posts,
-			'str'     => $strings,
+			// 'str'     => $strings,
 			'options' => json_encode( $instance ),
 		);
 		$output .= $twig->render( 'template.twig.html', $view );

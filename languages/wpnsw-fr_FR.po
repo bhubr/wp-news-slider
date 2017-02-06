@@ -18,18 +18,6 @@ msgstr "Transformer le titre du widget en lien"
 msgid "Show post thumbnails"
 msgstr "Afficher les images à la une"
 
-msgid "Stop"
-msgstr "Arrêt"
-
-msgid "Play &gt;"
-msgstr "Lecture automatique &gt;"
-
 msgid "News Slider"
 msgstr "Défileur d'Actualités"
-
-msgid "&lt;&lt; Previous"
-msgstr "&lt;&lt; Précédent"
-
-msgid "Next &gt;&gt;"
-msgstr "Prochain &gt;&gt;"
 

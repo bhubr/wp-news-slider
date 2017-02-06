@@ -1,17 +1,15 @@
 <div class="wp-sps-wrapper" id="wp-sps-{{ id }}" data-options='{{options|raw}}'>
   <p class='buttons' id='some{{id}}'>
-  {% for post in posts %}
-    <span class="numbered-btn" data-idx="{{ loop.index }}">{{ loop.index }}</span>
-  {% endfor %}
+    <span class="prev"><span class="icon-backward"></span></span>
+    {% for post in posts %}
+      <span class="numbered-btn" data-idx="{{ loop.index }}">{{ loop.index }}</span>
+    {% endfor %}
+    <span class="next"><span class="icon-forward2"></span></span>
   </p>
   <div class="mask">
     <div class="thumbs-wrapper">
     {% for post in posts %}
       <div class="excerpt">
-        <p class="buttons">
-          <span class="prev">{{ str.prev|raw }}</span>
-          <span class="next">{{ str.next|raw }}</span>
-        </p>
         <h3><a href='{{post.permalink}}' title='{{ post.title|raw }}'>{{ post.title|raw }}</a></h3>
         <div class="thumb-image">{{ post.thumbnail|raw }}</div>
         <div class="thumb-content">{{ post.excerpt|raw }}</div>
@@ -20,8 +18,8 @@
     </div><!-- END thumbs-wrapper -->
   </div><!-- END mask -->
   <p class="buttons">
-    <span class="stop-btn">{{ str.stop|raw }}</span>
-    <span class="play-btn">{{ str.play|raw }}</span>
+    <span class="icon-stop"></span>
+    <span class="icon-play2"></span>
   </p>
   {{numberedButtons}}
 </div><!-- END sample8 -->

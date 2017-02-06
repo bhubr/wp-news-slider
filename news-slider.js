@@ -43,17 +43,17 @@
 
 	    function setContainerHeight() {
 	    	var h3Height = $firstThumb.find('h3').outerHeight();
-	    	var buttonsHeight = $firstThumb.find('p.buttons').outerHeight();
+	    	// var buttonsHeight = $firstThumb.find('p.buttons').outerHeight();
 	    	var maxHeight = 0;
 	    	var thumbsAndHeights = [];
 	    	$thumbs.each( function(index, thumbEl) {
 	    		var $thumb = $(thumbEl);
 	    		var contentHeight = $thumb.find('.thumb-content').outerHeight();
 	    		if(contentHeight > maxHeight) maxHeight = contentHeight;
-	    		thumbsAndHeights.push({ thumb: $thumb, height: contentHeight + buttonsHeight + h3Height + 12 });
-	    		// console.log(buttonsHeight,  h3Height, contentHeight, maxHeight, buttonsHeight + h3Height + contentHeight);
+	    		thumbsAndHeights.push({ thumb: $thumb, height: contentHeight + h3Height + 12 });
+	    		console.log(h3Height, contentHeight, maxHeight, h3Height + contentHeight);
 	    	});
-	    	totalHeight = buttonsHeight + h3Height + maxHeight + 12;
+	    	totalHeight = h3Height + maxHeight + 12;
 	    	// console.log('total', totalHeight);
 	    	thumbsAndHeights.forEach(function(th) {
 	    		var vertPadding = (totalHeight - th.height) / 2;
@@ -71,10 +71,10 @@
 	    $('.wp-sps-wrapper .numbered-btn').click( function() {
 	    	fadeImages( $(this).data('idx') - 1 );
 	    } );
-	    $('.wp-sps-wrapper .stop-btn').click( function() {
+	    $('.wp-sps-wrapper .icon-stop').click( function() {
 	    	clearInterval(timer);
 	    } );
-	    $('.wp-sps-wrapper .play-btn').click( function() {
+	    $('.wp-sps-wrapper .icon-play2').click( function() {
 	    	fadeImages();
 	    	timer = setInterval(fadeImages, options.interval);
 	    } );

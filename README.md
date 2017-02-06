@@ -10,14 +10,16 @@ Among its features:
 
 - Replace Previous, Next, Stop, Play with icons (no need for i18n on frontend!)
 - Prev&Next side-to-side with play&stop
-- ~~compter le <p> de buttons dans calcul hauteur !~~
-- ~~Put back buttons~~
+- Recentrer verticalement le contenu après ajustement au max
+- Highlight les boutons numérotés
 - Handle custom post types
 - Plug prev&next
-- ~~Allow various instances (use WP_Widget instance's id)~~
 - Full translation
 - More clean-up
 - WP Code Conventions (PHP&JS)
 - Build (minify CSS&JS) and package (remove unwanted files)
 - Re-enable Twig cache
 - Add a clearfix at the end of the thumb div
+- ~~Put back buttons~~
+- ~~Allow various instances (use WP_Widget instance's id)~~
+- ~~compter le <p> de buttons dans calcul hauteur !~~
