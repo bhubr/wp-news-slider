@@ -50,7 +50,7 @@
 	    		if(contentHeight > maxHeight) maxHeight = contentHeight;
 	    		console.log(buttonsHeight,  h3Height, contentHeight, maxHeight, buttonsHeight + h3Height + contentHeight);
 	    	});
-	    	totalHeight = buttonsHeight + h3Height + maxHeight;
+	    	totalHeight = buttonsHeight + h3Height + maxHeight + 12;
 	    	console.log('total', totalHeight);
 
 	    	$instance.find('.mask').css('height', totalHeight);
