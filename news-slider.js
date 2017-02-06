@@ -45,13 +45,21 @@
 	    	var h3Height = $firstThumb.find('h3').outerHeight();
 	    	var buttonsHeight = $firstThumb.find('p.buttons').outerHeight();
 	    	var maxHeight = 0;
+	    	var thumbsAndHeights = [];
 	    	$thumbs.each( function(index, thumbEl) {
-	    		var contentHeight = $(thumbEl).find('.thumb-content').outerHeight();
+	    		var $thumb = $(thumbEl);
+	    		var contentHeight = $thumb.find('.thumb-content').outerHeight();
 	    		if(contentHeight > maxHeight) maxHeight = contentHeight;
-	    		console.log(buttonsHeight,  h3Height, contentHeight, maxHeight, buttonsHeight + h3Height + contentHeight);
+	    		thumbsAndHeights.push({ thumb: $thumb, height: contentHeight + buttonsHeight + h3Height + 12 });
+	    		// console.log(buttonsHeight,  h3Height, contentHeight, maxHeight, buttonsHeight + h3Height + contentHeight);
 	    	});
 	    	totalHeight = buttonsHeight + h3Height + maxHeight + 12;
-	    	console.log('total', totalHeight);
+	    	// console.log('total', totalHeight);
+	    	thumbsAndHeights.forEach(function(th) {
+	    		var vertPadding = (totalHeight - th.height) / 2;
+	    		// console.log('total h', totalHeight, 'this h', th.height, 'vp', vertPadding);
+	    		th.thumb.css('padding', vertPadding + 'px 0');
+	    	});
 
 	    	$instance.find('.mask').css('height', totalHeight);
 	    	$instance.find('.thumbs-wrapper .excerpt').css('height', totalHeight);
