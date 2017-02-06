@@ -9,10 +9,11 @@ Among its features:
 # Todo
 
 - Replace Previous, Next, Stop, Play with icons (no need for i18n on frontend!)
-- compter le <p> de buttons dans calcul hauteur !
+- Prev&Next side-to-side with play&stop
+- ~~compter le <p> de buttons dans calcul hauteur !~~
 - ~~Put back buttons~~
 - Handle custom post types
-- Allow various instances (use WP_Widget instance's id)
+- ~~Allow various instances (use WP_Widget instance's id)~~
 - Full translation
 - More clean-up
 - WP Code Conventions (PHP&JS)

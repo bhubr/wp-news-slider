@@ -68,7 +68,7 @@
 	    } );
 	    $('.wp-sps-wrapper .play-btn').click( function() {
 	    	fadeImages();
-	    	timer = setInterval(fadeImages, slideInterval);
+	    	timer = setInterval(fadeImages, options.interval);
 	    } );
 	  }
 
