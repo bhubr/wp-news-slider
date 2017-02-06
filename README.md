@@ -13,6 +13,7 @@ Among its features:
 - ~~compter le <p> de buttons dans calcul hauteur !~~
 - ~~Put back buttons~~
 - Handle custom post types
+- Plug prev&next
 - ~~Allow various instances (use WP_Widget instance's id)~~
 - Full translation
 - More clean-up
