@@ -1,5 +1,5 @@
 (function($) {
-  $(document).ready( function() {
+  $(window).load( function() {
 
  		function sliderWidget(index, instance) {
  			var $instance = $(instance);
@@ -26,7 +26,6 @@
 	    var $playBtn = $instance.find('.icon-play2');
 	    var $stopBtn = $instance.find('.icon-stop');
 	    var $prevBtn = $instance.find('.icon-backward');
-	    console.log($prevBtn);
 	    var $nextBtn = $instance.find('.icon-forward2');
 	    var timer = setInterval(fadeImages, options.interval);
 	    var currentImgIndex = 0;
@@ -38,7 +37,7 @@
 
       	$( $numberedBtns[currentImgIndex] ).removeClass('active');
 
-	      if(imgIndex) {
+	      if(imgIndex !== undefined) {
 	      	currentImgIndex = imgIndex;
 	      }
 	      else {
@@ -47,13 +46,15 @@
 	      if(currentImgIndex >= $thumbs.length) {
 	        currentImgIndex = 0;
 	      }
+	      if(currentImgIndex < 0) {
+	        currentImgIndex = $thumbs.length - 1;
+	      }
 	      $( $numberedBtns[currentImgIndex] ).addClass('active');
 	      $wrapper.animate({ top: (- currentImgIndex * totalHeight) + 'px' }, 350);
 	    }
 
 	    function setContainerHeight() {
 	    	var h3Height = $firstThumb.find('h3').outerHeight();
-	    	// var buttonsHeight = $firstThumb.find('p.buttons').outerHeight();
 	    	var maxHeight = 0;
 	    	var thumbsAndHeights = [];
 	    	$thumbs.each( function(index, thumbEl) {
@@ -61,12 +62,12 @@
 	    		var contentHeight = $thumb.find('.thumb-content').outerHeight();
 	    		if(contentHeight > maxHeight) maxHeight = contentHeight;
 	    		thumbsAndHeights.push({ thumb: $thumb, height: contentHeight + h3Height + 12 });
-	    		console.log(h3Height, contentHeight, maxHeight, h3Height + contentHeight);
+	    		// console.log(h3Height, contentHeight, maxHeight, h3Height + contentHeight);
 	    	});
 	    	totalHeight = h3Height + maxHeight + 12;
 	    	// console.log('total', totalHeight);
 	    	thumbsAndHeights.forEach(function(th) {
-	    		var vertPadding = (totalHeight - th.height) / 2;
+	    		var vertPadding = Math.floor((totalHeight - th.height) / 2);
 	    		// console.log('total h', totalHeight, 'this h', th.height, 'vp', vertPadding);
 	    		th.thumb.css('padding', vertPadding + 'px 0');
 	    	});
@@ -82,24 +83,10 @@
 	    	fadeImages( $(this).data('idx') - 1 );
 	    } );
 	    $prevBtn.click( function(evt) {
-	    	evt.stopPropagation();
-	    	evt.preventDefault();
-
-	    	var current = currentImgIndex - 1;
-	    	console.log('back#1', current);
-	    	if ( current < 0 ) {
-	    		current = $thumbs.length - 1;
-	    	}
-	    	console.log('back#2', current);
-	    	fadeImages( current );
+	    	fadeImages( currentImgIndex - 1 );
 	    } );
 	    $nextBtn.click( function() {
-	    	console.log('for');
-	    	var current = currentImgIndex + 1;
-	    	if ( current >= $thumbs.length ) {
-	    		current = 0;
-	    	}
-	    	fadeImages( current );
+	    	fadeImages( currentImgIndex + 1 );
 	    } );
 	    $stopBtn.click( function() {
 	    	clearInterval(timer);
