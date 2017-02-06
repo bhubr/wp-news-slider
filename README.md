@@ -9,6 +9,7 @@ Among its features:
 # Todo
 
 - Plug prev&next
+- Reset timer after number/prev/next click
 - Highlight les boutons numérotés
 - Add a clearfix at the end of the thumb div
 - Handle custom post types

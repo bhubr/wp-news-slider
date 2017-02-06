@@ -19,8 +19,15 @@
 	  	}, filteredOptions);
 	  	console.log(instanceId, options);
 
+	  	var $wrapper = $instance.find('.thumbs-wrapper');
 	    var $thumbs = $instance.find('.excerpt');
 	    var $firstThumb = $($thumbs[0]);
+	    var $numberedBtns = $instance.find('.numbered-btn');
+	    var $playBtn = $instance.find('.icon-play2');
+	    var $stopBtn = $instance.find('.icon-stop');
+	    var $prevBtn = $instance.find('.icon-backward');
+	    console.log($prevBtn);
+	    var $nextBtn = $instance.find('.icon-forward2');
 	    var timer = setInterval(fadeImages, options.interval);
 	    var currentImgIndex = 0;
 	  	var totalHeight = 250;
@@ -28,6 +35,8 @@
 	    function fadeImages(imgIndex) {
 	      var $currentBefore = $( $thumbs[currentImgIndex] );
 	      var $currentAfter;
+
+      	$( $numberedBtns[currentImgIndex] ).removeClass('active');
 
 	      if(imgIndex) {
 	      	currentImgIndex = imgIndex;
@@ -38,7 +47,8 @@
 	      if(currentImgIndex >= $thumbs.length) {
 	        currentImgIndex = 0;
 	      }
-	      $currentBefore.parent().animate({ top: (- currentImgIndex * totalHeight) + 'px' }, 350);
+	      $( $numberedBtns[currentImgIndex] ).addClass('active');
+	      $wrapper.animate({ top: (- currentImgIndex * totalHeight) + 'px' }, 350);
 	    }
 
 	    function setContainerHeight() {
@@ -68,13 +78,33 @@
 	    setContainerHeight();
 	    $(window).on('resize', setContainerHeight);
 
-	    $('.wp-sps-wrapper .numbered-btn').click( function() {
+	    $numberedBtns.click( function(evt) {
 	    	fadeImages( $(this).data('idx') - 1 );
 	    } );
-	    $('.wp-sps-wrapper .icon-stop').click( function() {
+	    $prevBtn.click( function(evt) {
+	    	evt.stopPropagation();
+	    	evt.preventDefault();
+
+	    	var current = currentImgIndex - 1;
+	    	console.log('back#1', current);
+	    	if ( current < 0 ) {
+	    		current = $thumbs.length - 1;
+	    	}
+	    	console.log('back#2', current);
+	    	fadeImages( current );
+	    } );
+	    $nextBtn.click( function() {
+	    	console.log('for');
+	    	var current = currentImgIndex + 1;
+	    	if ( current >= $thumbs.length ) {
+	    		current = 0;
+	    	}
+	    	fadeImages( current );
+	    } );
+	    $stopBtn.click( function() {
 	    	clearInterval(timer);
 	    } );
-	    $('.wp-sps-wrapper .icon-play2').click( function() {
+	    $playBtn.click( function() {
 	    	fadeImages();
 	    	timer = setInterval(fadeImages, options.interval);
 	    } );

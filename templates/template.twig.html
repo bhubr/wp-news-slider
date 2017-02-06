@@ -1,7 +1,7 @@
 <div class="wp-sps-wrapper" id="wp-sps-{{ id }}" data-options='{{options|raw}}'>
   <p class='buttons' id='some{{id}}'>
     {% for post in posts %}
-      <span class="numbered-btn" data-idx="{{ loop.index }}">{{ loop.index }}</span>
+      <span class="numbered-btn {% if loop.first %}active{% endif %}" data-idx="{{ loop.index }}">{{ loop.index }}</span>
     {% endfor %}
   </p>
   <div class="mask">

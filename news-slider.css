@@ -22,7 +22,13 @@
 .wp-sps-wrapper .thumbs-wrapper div.thumb-content {
 	margin-top: 6px;
 }
-
+.numbered-btn.active {
+	color: white;
+	background: black;
+}
+.numbered-btn {
+	padding: 0 2px;
+}
 .wp-sps-wrapper .thumbs-wrapper .buttons{
 	text-align:left
 }
