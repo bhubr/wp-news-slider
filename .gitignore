@@ -1,1 +1,3 @@
-compilation_cache
+compilation_cache/
+node_modules/
+wp-simple-post-slider.zip

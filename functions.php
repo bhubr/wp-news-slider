@@ -119,12 +119,8 @@ function wpnsw_localize() {
 /* Scripts JS */
 function wpnsw_load_scripts() {
     if( !is_admin() ) {
-        //wp_enqueue_script('jquery');
-        // if( !wp_script_is( 'mootools' ) )
-        //     wp_enqueue_script( 'mootools', plugins_url( '/includes/mootools-1.2.2-core-nc.js', __FILE__) );
-        // if( !wp_script_is( 'noobslide' ) )
-        //     wp_enqueue_script( 'noobslide', plugins_url( '/includes/_class.noobSlide.packed.js', __FILE__), array( 'mootools' ), '3.11.10' );
-        wp_enqueue_script( 'news_slider_js', plugins_url( 'news-slider.js?ts=' . time(), __FILE__), array( 'jquery' ) );
+        $append = WP_DEBUG === true ? '?ts=' . time() : '';
+        wp_enqueue_script( 'wpsps-js', plugins_url( "assets/wp-simple-post-slider.min.js{$append}", __FILE__), array( 'jquery' ) );
     }
 
 }
@@ -132,8 +128,10 @@ function wpnsw_load_scripts() {
 // CSS Tableau
 function wpnsw_load_styles() {
     $current_user = wp_get_current_user();
-    if (!is_admin() )
-        wp_enqueue_style('news_slider_style', plugins_url('/news-slider.css?ts=' . time(), __FILE__) );
+    $append = WP_DEBUG === true ? '?ts=' . time() : '';
+    if (!is_admin() ) {
+        wp_enqueue_style('news_slider_style', plugins_url( "assets/wp-simple-post-slider.min.css{$append}", __FILE__) );
+    }
 }
 
 
@@ -244,36 +242,23 @@ function post_html_excerpt( $string ) {
 }   
 }
 /* Those functions should be put inside the widget class */
-    function get_sanitized_post_number( $number ) {
-        if ( empty( $number ) )
-            $number = 10;
-        else if ( $number < 1 )
-            $number = 1;
-        else if ( $number > 12 )
-            $number = 12;
-        return $number;
-    }
+function get_sanitized_post_number( $number ) {
+    if ( empty( $number ) )
+        $number = 10;
+    else if ( $number < 1 )
+        $number = 1;
+    else if ( $number > 12 )
+        $number = 12;
+    return $number;
+}
 
-    function get_numbered_buttons( $number, $id ) {
-        $out = "<p class='buttons' id='$id'>";
-        for( $i = 1; $i <= $number ; $i++ )
-            $out .= "<span>$i</span>\n";
-        $out .= "</p>";
-        return $out;
-    }
-    
-    function get_play_stop_buttons() {
-        return "<p class='buttons'>\n\t<span id='stop8'>" 
-            . __( 'Stop', 'wpnsw' ) . "</span>\n\t<span id='play8'>"
-            . __( 'Play &gt;', 'wpnsw' ) . "</span>\n</p>";
-    }
 
-    function convert_title_link( $title ) {
-        $page_posts_link = get_permalink( get_option( 'page_for_posts' ) );
-        $link_open = "<a href='$page_posts_link'>";
-        $link_close = "</a>";
-        return $link_open . $title . $link_close;
-    }
+function convert_title_link( $title ) {
+    $page_posts_link = get_permalink( get_option( 'page_for_posts' ) );
+    $link_open = "<a href='$page_posts_link'>";
+    $link_close = "</a>";
+    return $link_open . $title . $link_close;
+}
 
 function wp_widget_init() {
     register_widget('WP_Widget_Simple_Post_Slider');
