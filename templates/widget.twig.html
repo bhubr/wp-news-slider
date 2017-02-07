@@ -1,4 +1,4 @@
-<div class="wp-sps-wrapper" id="wp-sps-{{ id }}" data-options='{{options|raw}}'>
+<div class="wp-sps-wrapper" id="wp-sps-{{ id }}" data-options='{{jsonOptions|raw}}'>
   <p class='buttons' id='some{{id}}'>
     {% for post in posts %}
       <span class="numbered-btn {% if loop.first %}active{% endif %}" data-idx="{{ loop.index }}">{{ loop.index }}</span>
@@ -9,7 +9,7 @@
     {% for post in posts %}
       <div class="excerpt">
         <h3><a href='{{post.permalink}}' title='{{ post.title|raw }}'>{{ post.title|raw }}</a></h3>
-        <div class="thumb-image">{{ post.thumbnail|raw }}</div>
+        {% if options.show_thumbs %}<div class="thumb-image">{{ post.thumbnail|raw }}</div>{% endif %}
         <div class="thumb-content">{{ post.excerpt|raw }}</div>
       </div><!-- END excerpt -->
     {% endfor %}

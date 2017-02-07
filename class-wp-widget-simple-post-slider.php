@@ -3,6 +3,7 @@
  * Class for the actual Post Slider Widget
  */
 require_once 'vendor/autoload.php';
+require_once 'class-twig-wordpress-widget.php';
 
 /**
  * WP_Widget_Simple_Post_Slider widget class
@@ -15,13 +16,20 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
 	 * Initialize stuff, register WP actions
 	 */
 	function __construct() {
-		$widget_ops = array( 'classname' => 'widget_news_slider', 'description' => __( 'The most recent posts on your site' ) );
+		$widget_ops = array( 'classname' => 'simple_post_slider', 'description' => __( 'The most recent posts on your site' ) );
 		parent::__construct( 'simple-post-slider', __( 'Simple Post Slider', 'wpnsw' ), $widget_ops );
-		$this->alt_option_name = 'widget_news_slider';
+		$this->alt_option_name = 'simple_post_slider';
 
 		add_action( 'save_post', array( &$this, 'flush_widget_cache' ) );
 		add_action( 'deleted_post', array( &$this, 'flush_widget_cache' ) );
 		add_action( 'switch_theme', array( &$this, 'flush_widget_cache' ) );
+
+		$loader = new Twig_Loader_Filesystem( __DIR__ . '/templates' );
+		$this->twig = new Twig_Environment($loader, array(
+			// 'cache' => __DIR__ . '/compilation_cache',
+		) );
+		$this->twig->addExtension( Twig_WordPress_Widget::get_instance( $this ) );
+
 	}
 
 	/**
@@ -30,8 +38,7 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
 	 * @param string instance the instance
 	 */
 	function widget($args, $instance) {
-		$cache = wp_cache_get( 'widget_news_slider', 'widget' );
-
+		$cache = wp_cache_get( 'simple_post_slider', 'widget' );
 		if ( ! is_array( $cache ) ) {
 			$cache = array();
 		}
@@ -42,14 +49,11 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
 		}
 
 		$output = '';
-		extract( $args );
-
 		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? __( 'News Slider', 'wpnsw' ) : $instance['title'], $instance, $this->id_base );
-
 		$number = get_sanitized_post_number( (int) $instance['number'] );
+
 		/* Query Recent Posts */
 		$query = new WP_Query( array( 'showposts' => $number, 'nopaging' => 0, 'post_status' => 'publish', 'caller_get_posts' => 1 ) );
-
 		if ( ! $query->have_posts() ) {
 			return;
 		}
@@ -60,19 +64,16 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
 		if ( $post_count < $number ) {
 			$number = $post_count;
 		}
-		$output .= $before_widget;
+
+		$output .= $args['before_widget'];
 		if ( ! empty( $instance['title_is_link'] ) ) {
 			$title = convert_title_link( $title );
 		}
 		if ( ! empty( $title ) ) {
-			$output .= $before_title . $title . $after_title;
+			$output .= $args['before_title'] . $title . $args['after_title'];
 		}
 
-		$loader = new Twig_Loader_Filesystem( __DIR__ . '/templates' );
-		$twig = new Twig_Environment($loader, array(
-			// 'cache' => __DIR__ . '/compilation_cache',
-		) );
-
+		/* Setup posts before sending them to Twig view */
 		$posts = array_map( function( $post ) {
 			return array(
 				'title'     => $post->post_title,
@@ -85,10 +86,12 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
 		$view = array(
 			'id'      => $this->id,
 			'posts'   => $posts,
-			'options' => json_encode( $instance ),
+			'options' => $instance,
+			'jsonOptions' => json_encode( $instance ),
 		);
-		$output .= $twig->render( 'template.twig.html', $view );
-		$output .= $after_widget;
+		$output .= $this->twig->render( 'widget.twig.html', $view );
+		$output .= $args['after_widget'];
+
 		// Reset the global $the_post as this query will have stomped on it.
 		wp_reset_postdata();
 
@@ -119,6 +122,8 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
 		$instance['title'] = strip_tags( $new_instance['title'] );
 		$instance['number'] = (int) $new_instance['number'];
 		$instance['interval'] = ( ! empty( $new_instance['interval'] ) ? (int) $new_instance['interval'] : 5 );
+		$instance['direction'] = $new_instance['direction'];
+		$instance['bullet_style'] = $new_instance['bullet_style'];
 
 		$this->flush_widget_cache();
 
@@ -144,28 +149,40 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
 		$instance = wp_parse_args( (array) $instance, array( 'title' => "", 'number' => 0, 'interval' => 0, 'show_thumbs' => false, 'title_is_link' => false ) );
 
 		$title = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
+		$direction = isset( $instance['direction'] ) ? esc_attr( $instance['direction'] ) : 'vertical';
+		$bullet_style = isset( $instance['bullet_style'] ) ? esc_attr( $instance['bullet_style'] ) : 'number';
+
 		if ( !isset( $instance['number'] ) || !$number = (int) $instance['number'] ) {
 			$number = 5;
 		}
 		if ( !isset($instance['interval']) || !$interval = (int) $instance['interval'] ) {
 			$interval = 5;
 		}
-?>
-		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
-		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></p>
 
-		<p><label for="<?php echo $this->get_field_id('number'); ?>"><?php _e('Number of posts to show:'); ?></label>
-		<input id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" type="text" value="<?php echo $number; ?>" size="2" /></p>
-
-		<p><label for="<?php echo $this->get_field_id('interval'); ?>"><?php _e('Slide interval (seconds):', 'wpnsw' ); ?></label>
-		<input id="<?php echo $this->get_field_id('interval'); ?>" name="<?php echo $this->get_field_name('interval'); ?>" type="text" value="<?php echo $interval; ?>" size="3" /></p>
-
-		<input class="checkbox" type="checkbox" <?php checked($instance['title_is_link'], true) ?> id="<?php echo $this->get_field_id('title_is_link'); ?>" name="<?php echo $this->get_field_name('title_is_link'); ?>" />
-		<label for="<?php echo $this->get_field_id('title_is_link'); ?>"><?php _e('Turn widget title into a link', 'wpnsw' ); ?></label><br />
-
-		<input class="checkbox" type="checkbox" <?php checked($instance['show_thumbs'], true) ?> id="<?php echo $this->get_field_id('show_thumbs'); ?>" name="<?php echo $this->get_field_name('show_thumbs'); ?>" />
-		<label for="<?php echo $this->get_field_id('show_thumbs'); ?>"><?php _e('Show post thumbnails', 'wpnsw' ); ?></label><br />
-
-		<?php
+		echo $this->twig->render( 'options_form.twig.html', array(
+			'title'        => $title,
+			'number'       => $number,
+			'interval'     => $interval,
+			'instance'     => $instance,
+			'direction'    => $direction,
+			'bullet_style' => $bullet_style,
+			'str'          => array(
+				'title'         => __( 'Title:' ),
+				'number'        => __( 'Number of posts to show:' ),
+				'interval'      => __( 'Slide interval (seconds):', 'wpnsw' ),
+				'title_is_link' => __( 'Turn widget title into a link', 'wpnsw' ),
+				'show_thumbs'   => __( 'Show post thumbnails', 'wpnsw' ),
+				'direction'     => __( 'Slide direction (horizontal/vertical)', 'wpnsw' ),
+				'bullet_style'  => __( 'Bullet style (number/bullet)', 'wpnsw' ),
+				'directions'    => array(
+					'vertical'    => __( 'Vertical', 'wpnsw' ),
+					'horizontal'  => __( 'Horizontal', 'wpnsw' ),
+				),
+				'bullet_styles' => array(
+					'number'      => __( 'Number', 'wpnsw' ),
+					'bullet'      => __( 'Bullet', 'wpnsw' ),
+				),
+			)
+		) );
 	}
 }

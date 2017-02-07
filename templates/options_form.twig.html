@@ -1,0 +1,36 @@
+<p>
+  <label for="{{ fieldId('title') }}">{{ str.title|raw }}</label>
+  <input class="widefat" id="{{ fieldId('title') }}" name="{{ fieldName('title') }}" type="text" value="{{ title }}" />
+</p>
+
+<p>
+  <label for="{{ fieldId('number') }}">{{ str.number|raw }}</label>
+  <input id="{{ fieldId('number') }}" name="{{ fieldName('number') }}" type="text" value="{{ number }}" />
+</p>
+
+<p>
+  <label for="{{ fieldId('interval') }}">{{ str.interval|raw }}</label>
+  <input id="{{ fieldId('interval') }}" name="{{ fieldName('interval') }}" type="text" value="{{ interval }}" />
+</p>
+
+<p>
+  <label for="{{ fieldId('direction') }}">{{ str.direction|raw }}</label>
+  <select id="{{ fieldId('direction') }}" name="{{ fieldName('direction') }}"  value="{{ direction }}">
+    <option value="vertical" {{ selected( direction, "vertical" ) }}>{{ str.directions.vertical }}</option>
+    <option value="horizontal" {{ selected( direction, "horizontal" ) }}>{{ str.directions.horizontal }}</option>
+  </select>
+</p>
+
+<p>
+  <label for="{{ fieldId('bullet_style') }}">{{ str.bullet_style|raw }}</label>
+  <select id="{{ fieldId('bullet_style') }}" name="{{ fieldName('bullet_style') }}"  value="{{ bullet_style }}">
+    <option value="number" {{ selected( bullet_style, "number" ) }}>{{ str.bullet_styles.number }}</option>
+    <option value="bullet" {{ selected( bullet_style, "bullet" ) }}>{{ str.bullet_styles.bullet }}</option>
+  </select>
+</p>
+
+<input class="checkbox" type="checkbox" {{ checked( instance.title_is_link, true ) }} id="{{ fieldId('title_is_link') }}" name="{{ fieldName('title_is_link') }}" />
+<label for="{{ fieldId('title_is_link') }}">{{ str.title_is_link }}</label><br />
+
+<input class="checkbox" type="checkbox" {{ checked( instance.show_thumbs, true ) }} id="{{ fieldId('show_thumbs') }}" name="{{ fieldName('show_thumbs') }}" />
+<label for="{{ fieldId('show_thumbs') }}">{{ str.show_thumbs }}</label><br />
