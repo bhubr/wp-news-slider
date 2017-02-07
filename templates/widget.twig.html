@@ -10,13 +10,11 @@
   </p>
   <div class="mask">
     <div class="thumbs-wrapper {{ options.direction }}">
-    {% for post in posts %}
-      <div class="excerpt">
+    {% for post in posts %}<div class="excerpt">
         <h3><a href='{{post.permalink}}' title='{{ post.title|raw }}'>{{ post.title|raw }}</a></h3>
         {% if options.show_thumbs %}<div class="thumb-image">{{ post.thumbnail|raw }}</div>{% endif %}
         <div class="thumb-content">{{ post.excerpt|raw }}</div>
-      </div><!-- END excerpt -->
-    {% endfor %}
+      </div><!-- END excerpt -->{% endfor %}
     </div><!-- END thumbs-wrapper -->
   </div><!-- END mask -->
   <p class="buttons">

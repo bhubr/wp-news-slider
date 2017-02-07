@@ -3,19 +3,25 @@
 	margin: 0 1em 1em;
 }
 
-.wp-sps-wrapper .thumbs-wrapper{
+.wp-sps-wrapper .thumbs-wrapper {
 	position:absolute;
 }
 .wp-sps-wrapper .thumbs-wrapper h3 {
 	margin: 6px 0;
 	padding: 0;
 }
-.wp-sps-wrapper .thumbs-wrapper .excerpt{
-	margin-left: 2%;
+.wp-sps-wrapper .thumbs-wrapper.horizontal .excerpt{
+	display: inline-block;
+}
+.wp-sps-wrapper .thumbs-wrapper .excerpt {
 	height: 250px;
-	width: 96%;
 	overflow: hidden;
 }
+.wp-sps-wrapper .thumbs-wrapper.vertical .excerpt {
+  margin-left: 2%;
+  width: 96%;
+}
+
 .wp-sps-wrapper .thumbs-wrapper div.thumb-content p {
 	margin: 4px 0;
 }

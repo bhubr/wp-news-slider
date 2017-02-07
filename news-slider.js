@@ -7,21 +7,23 @@
  			var _options =  $instance.data('options');
  			var filteredOptions = {
  				interval: _options.interval * 1000,
- 				orientation: _options.orientation,
+ 				direction: _options.direction,
  				autoplay: _options.autoplay
  			};
 
 	  	// Get options
 	  	var options = $.extend({
 	  		interval: 5000,
-	  		orientation: 'vertical',
+	  		direction: 'vertical',
 	  		autoplay: true
 	  	}, filteredOptions);
-	  	console.log(instanceId, options);
+ 			var isVertical = options.direction === 'vertical';
+	  	// console.log(instanceId, options);
 
 	  	var $wrapper = $instance.find('.thumbs-wrapper');
 	    var $thumbs = $instance.find('.excerpt');
 	    var $firstThumb = $($thumbs[0]);
+	    var thumbWidth;
 	    var $numberedBtns = $instance.find('.numbered-btn');
 	    var $playBtn = $instance.find('.icon-play2');
 	    var $stopBtn = $instance.find('.icon-stop');
@@ -50,7 +52,12 @@
 	        currentImgIndex = $thumbs.length - 1;
 	      }
 	      $( $numberedBtns[currentImgIndex] ).addClass('active');
-	      $wrapper.animate({ top: (- currentImgIndex * totalHeight) + 'px' }, 350);
+	      if( isVertical ) {
+	      	$wrapper.animate({ top: (- currentImgIndex * totalHeight) + 'px' }, 350);
+	      }
+	      else {
+	      	$wrapper.animate({ left: (- currentImgIndex * thumbWidth) + 'px' }, 350);
+	      }
 	    }
 
 	    function setContainerHeight() {
@@ -76,6 +83,16 @@
 	    	$instance.find('.thumbs-wrapper .excerpt').css('height', totalHeight);
 	    }
 
+	    function setWrapperWidth() {
+	    	thumbWidth = $firstThumb.outerWidth();
+	    	$wrapper.css('width', thumbWidth * $thumbs.length);
+	    	$thumbs.width( thumbWidth );
+	    }
+
+	    if( ! isVertical ) {
+	    	setWrapperWidth();
+	    	$(window).on('resize', setWrapperWidth);
+	    }
 	    setContainerHeight();
 	    $(window).on('resize', setContainerHeight);
 

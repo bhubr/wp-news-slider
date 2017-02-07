@@ -14,7 +14,7 @@
 </p>
 
 <p>
-  <label for="{{ fieldId('direction') }}">{{ str.direction|raw }}</label>
+  <label for="{{ fieldId('direction') }}">{{ str.direction|raw }}</label><br>
   <select id="{{ fieldId('direction') }}" name="{{ fieldName('direction') }}"  value="{{ direction }}">
     <option value="vertical" {{ selected( direction, "vertical" ) }}>{{ str.directions.vertical }}</option>
     <option value="horizontal" {{ selected( direction, "horizontal" ) }}>{{ str.directions.horizontal }}</option>
@@ -22,7 +22,7 @@
 </p>
 
 <p>
-  <label for="{{ fieldId('bullet_style') }}">{{ str.bullet_style|raw }}</label>
+  <label for="{{ fieldId('bullet_style') }}">{{ str.bullet_style|raw }}</label><br>
   <select id="{{ fieldId('bullet_style') }}" name="{{ fieldName('bullet_style') }}"  value="{{ bullet_style }}">
     <option value="number" {{ selected( bullet_style, "number" ) }}>{{ str.bullet_styles.number }}</option>
     <option value="bullet" {{ selected( bullet_style, "bullet" ) }}>{{ str.bullet_styles.bullet }}</option>

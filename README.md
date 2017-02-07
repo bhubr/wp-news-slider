@@ -9,8 +9,6 @@ Among its features:
 # Todo
 
 - Bug with heights, again ($.outerHeight() gives 30px on a 2-lined h3 which takes up 60px...)
-- Twig template for options
-- Bullets instead of numbers (option)
 - Slide horizontally or vertically
 - widget title => blog (or list of custom post types)
 - Add option: "turn post title into link..."
@@ -24,6 +22,8 @@ Among its features:
 - Build (minify CSS&JS) and package (remove unwanted files)
 - Re-enable Twig cache
 - Test under major WP themes (free ones + Zoo and Jupiter that I own)
+- ~~Bullets instead of numbers (option)~~
+- ~~Twig template for options~~
 - ~~Plug prev&next~~
 - ~~Highlight les boutons numérotés~~
 - ~~Replace Previous, Next, Stop, Play with icons (no need for i18n on frontend!)~~
