@@ -25,9 +25,10 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
 		add_action( 'switch_theme', array( &$this, 'flush_widget_cache' ) );
 
 		$loader = new Twig_Loader_Filesystem( __DIR__ . '/templates' );
-		$this->twig = new Twig_Environment($loader, array(
-			// 'cache' => __DIR__ . '/compilation_cache',
-		) );
+		$twig_options = WP_DEBUG === true ? array() : array(
+			'cache' => __DIR__ . '/compilation_cache'
+		);
+		$this->twig = new Twig_Environment( $loader, $twig_options );
 		$this->twig->addExtension( Twig_WordPress_Widget::get_instance( $this ) );
 
 	}
