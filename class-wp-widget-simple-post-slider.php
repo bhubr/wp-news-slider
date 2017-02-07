@@ -121,8 +121,9 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
 
 		$instance = $old_instance;
 		$instance = array( 'title_is_link' => 0, 'show_thumbs' => 0 );
-		foreach ( $instance as $field => $val ) {
-			if ( isset( $new_instance[ $field ] ) ) {
+		$checkboxes = array('title_is_link', 'show_thumbs', 'autoplay');
+		foreach( $checkboxes as  $field ) {
+			if ( array_key_exists($field, $new_instance ) && $new_instance[ $field ] === 'on' ) {
 				$instance[ $field ] = 1;
 			}
 		}
@@ -158,6 +159,7 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
 		$title = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
 		$direction = isset( $instance['direction'] ) ? esc_attr( $instance['direction'] ) : 'vertical';
 		$bullet_style = isset( $instance['bullet_style'] ) ? esc_attr( $instance['bullet_style'] ) : 'number';
+		$bullet_style = isset( $instance['autoplay'] ) ? esc_attr( $instance['autoplay'] ) : 1;
 
 		if ( !isset( $instance['number'] ) || !$number = (int) $instance['number'] ) {
 			$number = 5;
@@ -179,6 +181,7 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
 				'interval'      => __( 'Slide interval (seconds):', 'wpnsw' ),
 				'title_is_link' => __( 'Turn widget title into a link', 'wpnsw' ),
 				'show_thumbs'   => __( 'Show post thumbnails', 'wpnsw' ),
+				'autoplay'      => __( 'Automatically start sliding', 'wpnsw' ),
 				'direction'     => __( 'Slide direction (horizontal/vertical)', 'wpnsw' ),
 				'bullet_style'  => __( 'Bullet style (number/bullet)', 'wpnsw' ),
 				'directions'    => array(

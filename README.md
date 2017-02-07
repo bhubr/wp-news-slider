@@ -9,7 +9,7 @@ Among its features:
 # Todo
 
 - widget title link => blog (or list of custom post types)
-- Reset timer after number/prev/next click
+- bug width slide horizontal
 - Add a clearfix at the end of the thumb div
 - Handle custom post types
 - Full translation
@@ -18,6 +18,8 @@ Among its features:
 - Build (minify CSS&JS) and package (remove unwanted files)
 - Re-enable Twig cache
 - Test under major WP themes (free ones + Zoo and Jupiter that I own)
+- ~~Reset timer after number/prev/next click~~
+- ~~autoplay on/off option~~
 - ~~Vertically align thumbs content after setting all of them to same height (optional)~~
 - ~~Slide horizontally or vertically~~
 - ~~Bullets instead of numbers (option)~~
@@ -28,4 +30,4 @@ Among its features:
 - ~~Prev&Next side-to-side with play&stop~~
 - ~~Put back buttons~~
 - ~~Allow various instances (use WP_Widget instance's id)~~
-- ~~compter le <p> de buttons dans calcul hauteur !~~
+- ~~compter le &lt;p&gt; de buttons dans calcul hauteur (plus maintenant !)~~

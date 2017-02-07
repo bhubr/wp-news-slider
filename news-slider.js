@@ -15,7 +15,7 @@
 	  	var options = $.extend({
 	  		interval: 5000,
 	  		direction: 'vertical',
-	  		autoplay: true
+	  		autoplay: false
 	  	}, filteredOptions);
  			var isVertical = options.direction === 'vertical';
 	  	// console.log(instanceId, options);
@@ -29,7 +29,7 @@
 	    var $stopBtn = $instance.find('.icon-stop');
 	    var $prevBtn = $instance.find('.icon-backward');
 	    var $nextBtn = $instance.find('.icon-forward2');
-	    var timer = setInterval(fadeImages, options.interval);
+	    var timer = null;
 	    var currentImgIndex = 0;
 	  	var totalHeight = 250;
 
@@ -89,6 +89,23 @@
 	    	$thumbs.width( thumbWidth );
 	    }
 
+	    function isTimerRunning() {
+	    	return timer !== null;
+	    }
+
+	    function resetTimer( doRestart ) {
+	    	clearInterval(timer);
+	    	if ( doRestart && isTimerRunning() ) {
+	    		timer = setInterval(fadeImages, options.interval);
+	    	}
+	    	else {
+		    	timer = null;
+	    	}
+	    }
+
+	    if( options.autoplay ) {
+	    	timer = setInterval(fadeImages, options.interval);
+	    }
 	    if( ! isVertical ) {
 	    	setWrapperWidth();
 	    	$(window).on('resize', setWrapperWidth);
@@ -98,15 +115,18 @@
 
 	    $numberedBtns.click( function(evt) {
 	    	fadeImages( $(this).data('idx') - 1 );
+	    	resetTimer( true );
 	    } );
 	    $prevBtn.click( function(evt) {
 	    	fadeImages( currentImgIndex - 1 );
+	    	resetTimer( true );
 	    } );
 	    $nextBtn.click( function() {
 	    	fadeImages( currentImgIndex + 1 );
+	    	resetTimer( true );
 	    } );
 	    $stopBtn.click( function() {
-	    	clearInterval(timer);
+	    	resetTimer( false );
 	    } );
 	    $playBtn.click( function() {
 	    	fadeImages();

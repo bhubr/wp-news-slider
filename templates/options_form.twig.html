@@ -29,6 +29,9 @@
   </select>
 </p>
 
+<input class="checkbox" type="checkbox" {{ checked( instance.autoplay, true ) }} id="{{ fieldId('autoplay') }}" name="{{ fieldName('autoplay') }}" />
+<label for="{{ fieldId('autoplay') }}">{{ str.autoplay }}</label><br />
+
 <input class="checkbox" type="checkbox" {{ checked( instance.title_is_link, true ) }} id="{{ fieldId('title_is_link') }}" name="{{ fieldName('title_is_link') }}" />
 <label for="{{ fieldId('title_is_link') }}">{{ str.title_is_link }}</label><br />
 
