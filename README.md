@@ -8,20 +8,18 @@ Among its features:
 
 # Todo
 
-- Bug with heights, again ($.outerHeight() gives 30px on a 2-lined h3 which takes up 60px...)
-- Slide horizontally or vertically
-- widget title => blog (or list of custom post types)
-- Add option: "turn post title into link..."
-- Vertically align thumbs content after setting all of them to same height (optional)
+- widget title link => blog (or list of custom post types)
 - Reset timer after number/prev/next click
 - Add a clearfix at the end of the thumb div
 - Handle custom post types
 - Full translation
-- More clean-up
-- WP Code Conventions (PHP&JS)
+- Bug with heights, again ($.outerHeight() gives 30px on a 2-lined h3 which takes up 60px...)
+- More clean-up and follow WP Code Conventions (PHP&JS)
 - Build (minify CSS&JS) and package (remove unwanted files)
 - Re-enable Twig cache
 - Test under major WP themes (free ones + Zoo and Jupiter that I own)
+- ~~Vertically align thumbs content after setting all of them to same height (optional)~~
+- ~~Slide horizontally or vertically~~
 - ~~Bullets instead of numbers (option)~~
 - ~~Twig template for options~~
 - ~~Plug prev&next~~
