@@ -9,15 +9,15 @@ Among its features:
 # Todo
 
 - widget title link => blog (or list of custom post types)
-- bug width slide horizontal
-- Add a clearfix at the end of the thumb div
-- Handle custom post types
+- bug width slide horizontal (on window resize)
 - Full translation
 - Bug with heights, again ($.outerHeight() gives 30px on a 2-lined h3 which takes up 60px...)
 - More clean-up and follow WP Code Conventions (PHP&JS)
 - Build (minify CSS&JS) and package (remove unwanted files)
-- Re-enable Twig cache
 - Test under major WP themes (free ones + Zoo and Jupiter that I own)
+- ~~Add a clearfix at the end of the thumb div (actually done in JS since it is where we mess with heights)~~
+- ~~Re-enable Twig cache (only in production)~~
+- ~~Handle custom post types~~
 - ~~Reset timer after number/prev/next click~~
 - ~~autoplay on/off option~~
 - ~~Vertically align thumbs content after setting all of them to same height (optional)~~

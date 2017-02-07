@@ -67,8 +67,10 @@
 	    	$thumbs.each( function(index, thumbEl) {
 	    		var $thumb = $(thumbEl);
 	    		var contentHeight = $thumb.find('.thumb-content').outerHeight();
-	    		if(contentHeight > maxHeight) maxHeight = contentHeight;
-	    		thumbsAndHeights.push({ thumb: $thumb, height: contentHeight + h3Height + 12 });
+	    		var imgHeight = $thumb.find('.thumb-image img').outerHeight() + 14;
+	    		var thumbHeight = Math.max( contentHeight, imgHeight );
+	    		if(thumbHeight > maxHeight) maxHeight = thumbHeight;
+	    		thumbsAndHeights.push({ thumb: $thumb, height: thumbHeight + h3Height + 12 });
 	    		// console.log(h3Height, contentHeight, maxHeight, h3Height + contentHeight);
 	    	});
 	    	totalHeight = h3Height + maxHeight + 12;
