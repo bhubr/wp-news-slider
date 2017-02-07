@@ -53,7 +53,13 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
 		$number = get_sanitized_post_number( (int) $instance['number'] );
 
 		/* Query Recent Posts */
-		$query = new WP_Query( array( 'showposts' => $number, 'nopaging' => 0, 'post_status' => 'publish', 'caller_get_posts' => 1 ) );
+		$query = new WP_Query( array(
+			'showposts' => $number,
+			'nopaging' => 0,
+			'post_status' => 'publish',
+			'caller_get_posts' => 1,
+			'post_type' => $instance['post_type']
+		) );
 		if ( ! $query->have_posts() ) {
 			return;
 		}
@@ -131,6 +137,7 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
 		$instance['number'] = (int) $new_instance['number'];
 		$instance['interval'] = ( ! empty( $new_instance['interval'] ) ? (int) $new_instance['interval'] : 5 );
 		$instance['direction'] = $new_instance['direction'];
+		$instance['post_type'] = $new_instance['post_type'];
 		$instance['bullet_style'] = $new_instance['bullet_style'];
 
 		$this->flush_widget_cache();
@@ -156,7 +163,9 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
 	function form( $instance ) {
 		$instance = wp_parse_args( (array) $instance, array( 'title' => "", 'number' => 0, 'interval' => 0, 'show_thumbs' => false, 'title_is_link' => false ) );
 
+		$post_types = array_values( get_post_types() );
 		$title = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
+		$post_type = isset( $instance['post_type'] ) ? esc_attr( $instance['post_type'] ) : 'post';
 		$direction = isset( $instance['direction'] ) ? esc_attr( $instance['direction'] ) : 'vertical';
 		$bullet_style = isset( $instance['bullet_style'] ) ? esc_attr( $instance['bullet_style'] ) : 'number';
 		$bullet_style = isset( $instance['autoplay'] ) ? esc_attr( $instance['autoplay'] ) : 1;
@@ -169,6 +178,7 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
 		}
 
 		echo $this->twig->render( 'options_form.twig.html', array(
+			'post_types'   => $post_types,
 			'title'        => $title,
 			'number'       => $number,
 			'interval'     => $interval,
@@ -182,6 +192,7 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
 				'title_is_link' => __( 'Turn widget title into a link', 'wpnsw' ),
 				'show_thumbs'   => __( 'Show post thumbnails', 'wpnsw' ),
 				'autoplay'      => __( 'Automatically start sliding', 'wpnsw' ),
+				'post_type'     => __( 'Post type', 'wpnsw' ),
 				'direction'     => __( 'Slide direction (horizontal/vertical)', 'wpnsw' ),
 				'bullet_style'  => __( 'Bullet style (number/bullet)', 'wpnsw' ),
 				'directions'    => array(

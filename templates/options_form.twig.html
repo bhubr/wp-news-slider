@@ -14,6 +14,15 @@
 </p>
 
 <p>
+  <label for="{{ fieldId('post_type') }}">{{ str.post_type|raw }}</label><br>
+  <select id="{{ fieldId('post_type') }}" name="{{ fieldName('post_type') }}"  value="{{ post_type }}">
+    {% for post_type in post_types %}
+    <option value="{{post_type}}" {{ selected( instance.post_type, post_type ) }}>{{ post_type }}</option>
+    {% endfor %}
+  </select>
+</p>
+
+<p>
   <label for="{{ fieldId('direction') }}">{{ str.direction|raw }}</label><br>
   <select id="{{ fieldId('direction') }}" name="{{ fieldName('direction') }}"  value="{{ direction }}">
     <option value="vertical" {{ selected( direction, "vertical" ) }}>{{ str.directions.vertical }}</option>
