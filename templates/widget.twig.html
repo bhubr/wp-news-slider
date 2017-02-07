@@ -1,11 +1,15 @@
 <div class="wp-sps-wrapper" id="wp-sps-{{ id }}" data-options='{{jsonOptions|raw}}'>
   <p class='buttons' id='some{{id}}'>
     {% for post in posts %}
-      <span class="numbered-btn {% if loop.first %}active{% endif %}" data-idx="{{ loop.index }}">{{ loop.index }}</span>
+      {% if options.bullet_style == 'number' %}
+      <span class="numbered-btn number {% if loop.first %}active{% endif %}" data-idx="{{ loop.index }}">{{ loop.index }}</span>
+      {% else %}
+      <span class="numbered-btn bullet {% if loop.first %}active{% endif %}" data-idx="{{ loop.index }}"></span>
+      {% endif %}
     {% endfor %}
   </p>
   <div class="mask">
-    <div class="thumbs-wrapper">
+    <div class="thumbs-wrapper {{ options.direction }}">
     {% for post in posts %}
       <div class="excerpt">
         <h3><a href='{{post.permalink}}' title='{{ post.title|raw }}'>{{ post.title|raw }}</a></h3>

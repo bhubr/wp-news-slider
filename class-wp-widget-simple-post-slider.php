@@ -83,6 +83,13 @@ class WP_Widget_Simple_Post_Slider extends WP_Widget {
 			);
 		}, $recent_posts );
 
+		if( empty( $instance['bullet_style'] ) ) {
+			$instance['bullet_style'] = 'number';
+		}
+		if( empty( $instance['direction'] ) ) {
+			$instance['direction'] = 'vertical';
+		}
+
 		$view = array(
 			'id'      => $this->id,
 			'posts'   => $posts,
