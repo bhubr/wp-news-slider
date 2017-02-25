@@ -5,6 +5,12 @@
 
 .wp-sps-wrapper .thumbs-wrapper {
 	position:absolute;
+  top: 0;
+  left: 0;
+  transition: all 1s ease 0s;
+}
+.wp-sps-wrapper .thumbs-wrapper img {
+  width: 100%;
 }
 .wp-sps-wrapper .thumbs-wrapper h3 {
 	margin: 6px 0;
