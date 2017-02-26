@@ -10,6 +10,7 @@
  				direction: _options.direction,
  				autoplay: _options.autoplay
  			};
+ 			var $innerMask = $instance.find('.inner-mask');
 
 	  	// Get options
 	  	var options = $.extend({
@@ -58,35 +59,41 @@
 	      	$wrapper.css({ left: (- currentImgIndex * thumbWidth) + 'px' });
 	      }
 	    }
-
-	    function setContainerHeight() {
+	    function setContainerDimensions() {
+	    	var viewportWidth = $innerMask.width();
 	    	var h3Height = $firstThumb.find('h3').height();
 	    	var maxHeight = 0;
 	    	var thumbsAndHeights = [];
 	    	$thumbs.each( function(index, thumbEl) {
 	    		var $thumb = $(thumbEl);
+	    		$thumb.width(viewportWidth);
+	    		console.log(viewportWidth);
 	    		var contentHeight = $thumb.find('.thumb-content').height();
 	    		var imgHeight = $thumb.find('.thumb-image img').height();
 	    		var thumbHeight = Math.max( contentHeight, imgHeight );
 	    		if(thumbHeight > maxHeight) maxHeight = thumbHeight;
 	    		thumbsAndHeights.push({ thumb: $thumb, height: thumbHeight + h3Height });
-	    		// console.log(h3Height, contentHeight, maxHeight, h3Height + contentHeight);
+	    		console.log(h3Height, contentHeight, maxHeight, h3Height + contentHeight);
 	    	});
 	    	totalHeight = h3Height + maxHeight; // + 12;
 	    	// console.log('total', totalHeight);
-	    	// thumbsAndHeights.forEach(function(th) {
-	    	// 	var vertPadding = Math.floor((totalHeight - th.height) / 2);
-	    	// 	th.thumb.css('padding', vertPadding + 'px 0');
-	    	// });
+	    	thumbsAndHeights.forEach(function(th) {
+	    		var vertPadding = Math.floor((totalHeight - th.height) / 2);
+	    		th.thumb.css('padding', vertPadding + 'px 0');
+	    	});
 
-	    	$instance.find('.mask').css('height', totalHeight);
-	    	$instance.find('.thumbs-wrapper .excerpt').css('height', totalHeight);
+	    	$instance.find('.mask').css('height', viewportWidth * 3.0 / 4);
+	    	$instance.find('.thumbs-wrapper .excerpt').css('height', viewportWidth * 3.0 / 4);
+
+	    	console.log('mask',$instance.find('.mask').height());
+
 	    }
 
 	    function setWrapperWidth() {
 	    	thumbWidth = $firstThumb.width();
 	    	$wrapper.css('width', thumbWidth * $thumbs.length);
 	    	$thumbs.width( thumbWidth );
+	    	fadeImages( currentImgIndex );
 	    }
 
 	    function isTimerRunning() {
@@ -106,12 +113,12 @@
 	    if( options.autoplay ) {
 	    	timer = setInterval(fadeImages, options.interval);
 	    }
+	    setContainerDimensions();
+	    $(window).on('resize', setContainerDimensions);
 	    if( ! isVertical ) {
 	    	setWrapperWidth();
 	    	$(window).on('resize', setWrapperWidth);
 	    }
-	    setContainerHeight();
-	    $(window).on('resize', setContainerHeight);
 
 	    $numberedBtns.click( function(evt) {
 	    	fadeImages( $(this).data('idx') - 1 );

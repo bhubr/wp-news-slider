@@ -1,6 +1,26 @@
 module.exports = function(grunt) {
 
   grunt.initConfig({
+    gitinfo: {
+      // options: {
+      //   cwd: __dirname
+      // },
+      // local : {
+      //   branch : {
+      //     current : {
+      //       SHA               : "Current HEAD SHA",
+      //       shortSHA          : "Current HEAD short SHA",
+      //       // name              : "Current branch name",
+      //       currentUser       : "Current git user",
+      //       lastCommitTime    : "Last commit time",
+      //       lastCommitMessage : "Last commit message",
+      //       lastCommitAuthor  : "Last commit author",
+      //       lastCommitNumber  : "Last commit number"
+      //     }
+      //   }
+      // }
+    },
+    // author: '<%= gitinfo.local.branch.current.lastCommitAuthor %>',
     uglify: {
       my_target: {
         files: {
@@ -22,7 +42,7 @@ module.exports = function(grunt) {
     compress: {
       main: {
         options: {
-          archive: 'wp-simple-post-slider.zip'
+          archive: 'wp-simple-post-slider-{branch}.zip'
         },
         files: [
           {src: ['assets/**', 'vendor/**', 'templates/*', 'compilation_cache/*', 'languages/*', '*.php', 'tests'], dest: 'wp-simple-post-slider'}, // includes files in path
@@ -35,11 +55,30 @@ module.exports = function(grunt) {
     }
   });
 
+  // console.log(grunt.config('author'));
+
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-compress');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-gitinfo');
 
-  grunt.registerTask('default', ['uglify', 'cssmin', 'compress']);
+   grunt.registerTask('get-branch', function () {
+      var gitBanch = grunt.config('gitinfo.local.branch.current.name');
+      var prettyBranches = {
+        master: 'Branche principale',
+        slide_images: 'Slide images'
+      }
+      grunt.config('prettyBranch', prettyBranches[gitBanch]);
+      var archiveName = grunt.config('compress.main.options.archive');
+      grunt.config('compress.main.options.archive', archiveName.replace('{branch}', gitBanch));
+      grunt.log.ok();
+  });
+
+  // grunt.registerTask('gitinfo', 'GitInfo task', function(a, b) {
+  //   console.log(a, b);
+  // });
+
+  grunt.registerTask('default', ['gitinfo', 'get-branch', 'uglify', 'cssmin', 'compress']);
 
 };

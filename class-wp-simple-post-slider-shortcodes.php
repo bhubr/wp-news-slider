@@ -63,7 +63,7 @@ class WP_Simple_Post_Slider_Shortcodes {
 				// 'title'     => $post->post_title,
 				// 'permalink' => get_the_permalink( $post ),
 				// 'excerpt'   => post_html_excerpt( $post->post_content ),
-				'thumbnail' => "<img id=\"image-{$post->ID}\" src=\"{$post->guid}\" />",
+				'thumbnail' => "<img id=\"image-{$post->ID}\" class=\"pure-img\" src=\"{$post->guid}\" />",
 			);
 		}, $recent_posts );
 		if( empty( $args['bullet_style'] ) ) {

@@ -5,6 +5,7 @@
     "grunt-contrib-compress": "^1.4.1",
     "grunt-contrib-cssmin": "^1.0.2",
     "grunt-contrib-uglify": "^2.0.0",
-    "grunt-contrib-watch": "^1.0.0"
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-gitinfo": "^0.1.8"
   }
 }

@@ -1,5 +1,5 @@
 <div class="wp-sps-wrapper" id="wp-sps-{{ id }}" data-options='{{jsonOptions|raw}}'>
-  <p class='buttons' id='some{{id}}'>
+  <p class='buttons above' id='some{{id}}'>
     {% for post in posts %}
       {% if options.bullet_style == 'number' %}
       <span class="numbered-btn number {% if loop.first %}active{% endif %}" data-idx="{{ loop.index }}">{{ loop.index }}</span>
@@ -9,13 +9,14 @@
     {% endfor %}
   </p>
   <div class="mask">
+    <div class="inner-mask"></div>
     <div class="thumbs-wrapper {{ options.direction }}">
     {% for post in posts %}<div class="excerpt">
         <div class="thumb-image">{{ post.thumbnail|raw }}</div>
       </div><!-- END excerpt -->{% endfor %}
     </div><!-- END thumbs-wrapper -->
   </div><!-- END mask -->
-  <p class="buttons">
+  <p class="buttons below">
     <span class="prev"><span class="icon-backward"></span></span>
     <span class="icon-stop"></span>
     <span class="icon-play2"></span>
