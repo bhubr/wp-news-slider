@@ -85,13 +85,8 @@ if (!Array.prototype.reduce) {
       var $wrapper = $instance.find('.thumbs-wrapper');
       var $thumbs = $instance.find('.excerpt');
       var $outerMask = $instance.find('.mask');
-      var pxRegex = /(\d+)px.*/;
-      var maskExtraWidth = ['padding', 'border'].reduce(function(total, prop) {
-        var matches = pxRegex.exec($outerMask.css(prop));
-        if(matches !== null) {
-          return total + 2 * parseInt(matches[1], 10);
-        }
-      }, 0);
+      var maskExtraWidth = getExtraWidth($outerMask);
+      var boxExtraWidth = getExtraWidth($parentBox);
 
       var $firstThumb = $($thumbs[0]);
       var thumbWidth;
@@ -103,8 +98,17 @@ if (!Array.prototype.reduce) {
       var timer = null;
       var currentImgIndex = 0;
       var totalHeight = 250;
-      // var aspectRatio = 1.33;
-      console.log(options);
+
+      function getExtraWidth($el) {
+        var pxRegex = /(\d+)px.*/;
+        var extraWidth = ['padding-left', 'padding-right', 'border-left', 'border-right'].reduce(function(total, prop) {
+          var matches = pxRegex.exec($el.css(prop));
+          if(matches !== null) {
+            return total + parseInt(matches[1], 10);
+          }
+        }, 0);
+        return extraWidth;
+      }
 
       function fadeImages(imgIndex) {
         var $currentBefore = $( $thumbs[currentImgIndex] );
@@ -133,21 +137,13 @@ if (!Array.prototype.reduce) {
         }
       }
       function setContainerDimensions() {
-        console.log('outer mask dims', $outerMask.width() + 'x' + $outerMask.height());
-        console.log('inner mask dims', $innerMask.width() + 'x' + $innerMask.height());
-        var viewportWidth = $parentBox.width() - maskExtraWidth;
-
+        var viewportWidth = $parentBox.width() - boxExtraWidth - maskExtraWidth;
         var viewportHeight = viewportWidth / options.aspectRatio;
+
+        $outerMask.width(viewportWidth);
+        $outerMask.height(viewportHeight);
         $thumbs.width(viewportWidth);
         $thumbs.height(viewportHeight);
-
-        $outerMask.css('height', viewportHeight);
-        // $instance.find('.thumbs-wrapper .excerpt').css('height', viewportWidth * 3.0 / 4);
-
-        console.log('thumbs dims', $thumbs.width() + 'x' + $thumbs.height());
-        console.log('viewport dims', viewportWidth + 'x' + viewportHeight);
-        console.log('mask dims', $outerMask.width(), $outerMask.height());
-
       }
 
       function setWrapperWidth() {
