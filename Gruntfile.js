@@ -63,21 +63,17 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-gitinfo');
 
-   grunt.registerTask('get-branch', function () {
-      var gitBanch = grunt.config('gitinfo.local.branch.current.name');
-      var prettyBranches = {
-        master: 'Branche principale',
-        slide_images: 'Slide images'
-      }
-      grunt.config('prettyBranch', prettyBranches[gitBanch]);
-      var archiveName = grunt.config('compress.main.options.archive');
-      grunt.config('compress.main.options.archive', archiveName.replace('{branch}', gitBanch));
-      grunt.log.ok();
+  grunt.registerTask('get-branch', function () {
+    var gitBanch = grunt.config('gitinfo.local.branch.current.name');
+    var prettyBranches = {
+      master: 'Branche principale',
+      slide_images: 'Slide images'
+    }
+    grunt.config('prettyBranch', prettyBranches[gitBanch]);
+    var archiveName = grunt.config('compress.main.options.archive');
+    grunt.config('compress.main.options.archive', archiveName.replace('{branch}', gitBanch));
+    grunt.log.ok();
   });
-
-  // grunt.registerTask('gitinfo', 'GitInfo task', function(a, b) {
-  //   console.log(a, b);
-  // });
 
   grunt.registerTask('default', ['gitinfo', 'get-branch', 'uglify', 'cssmin', 'compress']);
 
