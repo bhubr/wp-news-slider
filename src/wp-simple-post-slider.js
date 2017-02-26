@@ -18,7 +18,6 @@
 	  		autoplay: false
 	  	}, filteredOptions);
  			var isVertical = options.direction === 'vertical';
-	  	console.log(instanceId, options);
 
 	  	var $wrapper = $instance.find('.thumbs-wrapper');
 	    var $thumbs = $instance.find('.excerpt');
@@ -70,7 +69,6 @@
 	    		var imgHeight = $thumb.find('.thumb-image img').height();
 	    		var thumbHeight = Math.max( contentHeight, imgHeight );
 	    		if(thumbHeight > maxHeight) maxHeight = thumbHeight;
-	    		console.log(thumbHeight, h3Height);
 	    		thumbsAndHeights.push({ thumb: $thumb, height: thumbHeight + h3Height });
 	    		// console.log(h3Height, contentHeight, maxHeight, h3Height + contentHeight);
 	    	});

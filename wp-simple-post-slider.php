@@ -22,8 +22,11 @@ add_action( 'wp_print_scripts', 'wpsps_load_assets' );
 add_action( 'init', 'wpnsw_localize' );
 
 function wpsps_load_assets() {
-	wp_enqueue_style('wpsps',  plugins_url('src/wp-simple-post-slider.css', __FILE__), [] );
-	wp_enqueue_script('wpsps',  plugins_url('src/wp-simple-post-slider.js', __FILE__), [] );
+	$use_minified = true;
+	$dir = $use_minified ? 'assets' : 'src';
+	$ext = $use_minified ? '.min' : '';
+	wp_enqueue_style('wpsps',  plugins_url("$dir/wp-simple-post-slider{$ext}.css", __FILE__), [] );
+	wp_enqueue_script('wpsps',  plugins_url("$dir/wp-simple-post-slider{$ext}.js", __FILE__), [] );
 }
 
 //add_action('init', 'wp_widget_init', 2);

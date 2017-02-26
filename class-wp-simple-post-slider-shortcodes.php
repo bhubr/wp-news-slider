@@ -35,7 +35,7 @@ class WP_Simple_Post_Slider_Shortcodes {
 		/* Query Recent Posts */
 		global $wpdb;
 		$recent_posts = $wpdb->get_results(
-			"SELECT ID,guid from $wpdb->posts WHERE ID IN (" . $args['images'] . ")"
+			"SELECT ID,guid from $wpdb->posts WHERE ID IN (" . $args['images'] . ") ORDER BY ID DESC"
 		);
 		// $recent_posts = get_posts( array(
 		// 	'post__in ' => $image_ids,
@@ -59,10 +59,11 @@ class WP_Simple_Post_Slider_Shortcodes {
 		/* Setup posts before sending them to Twig view */
 		$posts = array_map( function( $post ) {
 			return array(
+				// 'id' => $post->ID,
 				// 'title'     => $post->post_title,
 				// 'permalink' => get_the_permalink( $post ),
 				// 'excerpt'   => post_html_excerpt( $post->post_content ),
-				'thumbnail' => "<img src=\"{$post->guid}\" />",
+				'thumbnail' => "<img id=\"image-{$post->ID}\" src=\"{$post->guid}\" />",
 			);
 		}, $recent_posts );
 		if( empty( $args['bullet_style'] ) ) {

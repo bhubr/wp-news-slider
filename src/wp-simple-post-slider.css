@@ -54,6 +54,7 @@
 	margin: 0;
 	text-align:center;
 	clear:both;
+  color: #333;
 }
 .wp-sps-wrapper .numbered-btn.bullet::before { /* add the new bullet point */
   display: inline-block;
