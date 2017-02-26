@@ -129,7 +129,7 @@ if (!Array.prototype.reduce) {
           $wrapper.css({ top: (- currentImgIndex * totalHeight) + 'px' });
         }
         else {
-          $wrapper.css({ left: (1 - currentImgIndex * thumbWidth) + 'px' });
+          $wrapper.css({ left: (2 - currentImgIndex * thumbWidth) + 'px' });
         }
       }
       function setContainerDimensions() {
