@@ -103,9 +103,8 @@ if (!Array.prototype.reduce) {
         var pxRegex = /(\d+)px.*/;
         var extraWidth = ['padding-left', 'padding-right', 'border-left', 'border-right'].reduce(function(total, prop) {
           var matches = pxRegex.exec($el.css(prop));
-          if(matches !== null) {
-            return total + parseInt(matches[1], 10);
-          }
+          return matches !== null ?
+            total + parseInt(matches[1], 10) : 0;
         }, 0);
         return extraWidth;
       }

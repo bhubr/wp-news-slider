@@ -13,18 +13,24 @@ require_once 'vendor/autoload.php';
 require 'class-wp-widget-simple-post-slider.php';
 require 'class-wp-simple-post-slider-shortcodes.php';
 require 'functions.php';
+if(file_exists(__DIR__ . '/wpsps-settings.php')) {
+	require __DIR__ . '/wpsps-settings.php';
+}
+else {
+	define('WPSPS_MINIFIED_ASSETS', true);
+}
 
 add_filter('mce_external_plugins', "wpnsw_mceplugin_register");
 add_filter('mce_buttons', 'wpnsw_mceplugin_add_button', 0);
-
-
 add_action( 'wp_print_scripts', 'wpsps_load_assets' );
 add_action( 'init', 'wpnsw_localize' );
 
 function wpsps_load_assets() {
-	$use_minified = true;
-	$dir = $use_minified ? 'assets' : 'src';
-	$ext = $use_minified ? '.min' : '';
+	if(is_admin()) {
+		return;
+	}
+	$dir = WPSPS_MINIFIED_ASSETS ? 'assets' : 'src';
+	$ext = WPSPS_MINIFIED_ASSETS ? '.min' : '';
 	wp_enqueue_style('wpsps',  plugins_url("$dir/wp-simple-post-slider{$ext}.css", __FILE__), [] );
 	wp_enqueue_script('wpsps',  plugins_url("$dir/wp-simple-post-slider{$ext}.js", __FILE__), [] );
 }
