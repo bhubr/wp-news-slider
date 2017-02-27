@@ -137,13 +137,16 @@ if (!Array.prototype.reduce) {
         }
       }
       function setContainerDimensions() {
+        // console.log($parentBox.width());
         var viewportWidth = $parentBox.width() - boxExtraWidth - maskExtraWidth;
         var viewportHeight = viewportWidth / options.aspectRatio;
 
         $outerMask.width(viewportWidth);
+        $innerMask.width(viewportWidth);
         $outerMask.height(viewportHeight);
-        $thumbs.width(viewportWidth);
-        $thumbs.height(viewportHeight);
+        $thumbs.width(viewportWidth + 2);
+        $thumbs.height((viewportWidth + 2) / options.aspectRatio);
+        // console.log($thumbs.width(), $thumbs.height());
       }
 
       function setWrapperWidth() {
