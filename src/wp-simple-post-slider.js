@@ -85,8 +85,8 @@ if (!Array.prototype.reduce) {
       var $wrapper = $instance.find('.thumbs-wrapper');
       var $thumbs = $instance.find('.excerpt');
       var $outerMask = $instance.find('.mask');
-      var maskExtraWidth = getExtraWidth($outerMask);
-      var boxExtraWidth = getExtraWidth($parentBox);
+      // var maskExtraWidth = getExtraWidth($outerMask);
+      // var boxExtraWidth = getExtraWidth($parentBox);
 
       var $firstThumb = $($thumbs[0]);
       var thumbWidth;
@@ -100,12 +100,15 @@ if (!Array.prototype.reduce) {
       var totalHeight = 250;
 
       function getExtraWidth($el) {
+        console.log($el);
         var pxRegex = /(\d+)px.*/;
         var extraWidth = ['padding-left', 'padding-right', 'border-left', 'border-right'].reduce(function(total, prop) {
           var matches = pxRegex.exec($el.css(prop));
+          console.log(prop, $el.css(prop), matches);
           return matches !== null ?
             total + parseInt(matches[1], 10) : 0;
         }, 0);
+        console.log( extraWidth );
         return extraWidth;
       }
 
@@ -136,12 +139,12 @@ if (!Array.prototype.reduce) {
         }
       }
       function setContainerDimensions() {
-        // console.log($parentBox.width());
-        var viewportWidth = $parentBox.width() - boxExtraWidth - maskExtraWidth;
+        // console.log($parentBox.width(), boxExtraWidth, maskExtraWidth);
+        var viewportWidth = $parentBox.width(); //- boxExtraWidth - maskExtraWidth;
         var viewportHeight = viewportWidth / options.aspectRatio;
-
+console.log(viewportWidth, viewportHeight);
         $outerMask.width(viewportWidth);
-        $innerMask.width(viewportWidth);
+        $innerMask.width(viewportWidth - 10);
         $outerMask.height(viewportHeight);
         $thumbs.width(viewportWidth + 2);
         $thumbs.height((viewportWidth + 2) / options.aspectRatio);

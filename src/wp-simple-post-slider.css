@@ -92,6 +92,7 @@
 	position: relative;
 	width: 100%;
 	overflow: hidden;
+  box-sizing: border-box;
 }
 
 @media screen and(max-width: 859px) {
