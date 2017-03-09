@@ -63,9 +63,14 @@
 }
 .wp-sps-wrapper .buttons {
 	margin: 0;
-	text-align:center;
-	clear:both;
-  color: #333;
+	text-align: center;
+	clear: both;
+}
+.wp-sps-wrapper .buttons span {
+  color: #999;
+}
+.wp-sps-wrapper .buttons span:hover {
+  color: #666;
 }
 .wp-sps-wrapper .buttons.below {
   margin-top: 2px;

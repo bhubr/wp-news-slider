@@ -32,9 +32,22 @@ class WP_Simple_Post_Slider_Shortcodes {
 		$image_ids = array_map(function($id) { return (int)$id; }, explode(',', $args['images']));
 
 		global $wpdb;
-		$recent_posts = $wpdb->get_results(
+		$posts = $wpdb->get_results(
 			"SELECT ID,guid from $wpdb->posts WHERE ID IN (" . $args['images'] . ") ORDER BY ID DESC"
 		);
+		$post_metas = $wpdb->get_results(
+			"SELECT post_id, meta_value from $wpdb->postmeta WHERE post_id IN (" . $args['images'] . ") AND meta_key = '_wp_attachment_image_alt'"
+		);
+		$post_metas_indexed = array_reduce( $post_metas, function( $carry, $meta ) {
+			$carry[ $meta->post_id ] = $meta->meta_value;
+			return $carry;
+		}, [] );
+		$recent_posts = array_map( function( $post ) use( $post_metas_indexed ) {
+			$post->img_alt = array_key_exists( $post->ID, $post_metas_indexed ) ?
+				$post_metas_indexed[ $post->ID ] : '';
+			return $post;
+		}, $posts );
+
 		if ( empty( $recent_posts ) ) {
 			return;
 		}
@@ -48,7 +61,7 @@ class WP_Simple_Post_Slider_Shortcodes {
 		/* Setup posts before sending them to Twig view */
 		$posts = array_map( function( $post ) {
 			return array(
-				'thumbnail' => "<img id=\"image-{$post->ID}\" class=\"pure-img\" src=\"{$post->guid}\" />",
+				'thumbnail' => "<img id=\"image-{$post->ID}\" class=\"pure-img\" src=\"{$post->guid}\" alt=\"{$post->img_alt}\" />",
 			);
 		}, $recent_posts );
 		if( empty( $args['bullet_style'] ) ) {

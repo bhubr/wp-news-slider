@@ -22,7 +22,7 @@ else {
 
 add_filter('mce_external_plugins', "wpnsw_mceplugin_register");
 add_filter('mce_buttons', 'wpnsw_mceplugin_add_button', 0);
-add_action( 'wp_print_scripts', 'wpsps_load_assets' );
+// add_action( 'wp_print_scripts', 'wpsps_load_assets' );
 add_action( 'init', 'wpnsw_localize' );
 
 function wpsps_load_assets() {

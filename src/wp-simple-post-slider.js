@@ -5,6 +5,7 @@
 if (!Array.prototype.reduce) {
   Object.defineProperty(Array.prototype, 'reduce', {
     value: function(callback /*, initialValue*/) {
+console.log('using fucking polyfill');
       if (this === null) {
         throw new TypeError('Array.prototype.reduce called on null or undefined');
       }
@@ -86,7 +87,7 @@ if (!Array.prototype.reduce) {
       var $thumbs = $instance.find('.excerpt');
       var $outerMask = $instance.find('.mask');
       // var maskExtraWidth = getExtraWidth($outerMask);
-      // var boxExtraWidth = getExtraWidth($parentBox);
+      var boxExtraWidth = getExtraWidth($parentBox);
 
       var $firstThumb = $($thumbs[0]);
       var thumbWidth;
@@ -100,15 +101,15 @@ if (!Array.prototype.reduce) {
       var totalHeight = 250;
 
       function getExtraWidth($el) {
-        console.log($el);
-        var pxRegex = /(\d+)px.*/;
+        // console.log($el);
+        var pxRegex = /(\d+(\.\d+)?)px.*/;
         var extraWidth = ['padding-left', 'padding-right', 'border-left', 'border-right'].reduce(function(total, prop) {
           var matches = pxRegex.exec($el.css(prop));
-          console.log(prop, $el.css(prop), matches);
+          // console.log('prop', prop, 'css val', $el.css(prop), 'matches', matches, 'tot before', total, 'parsed int', matches !== null ? parseInt(matches[1], 10) : null );
           return matches !== null ?
-            total + parseInt(matches[1], 10) : 0;
+            total + parseInt(matches[1], 10) : total;
         }, 0);
-        console.log( extraWidth );
+        // console.log( extraWidth );
         return extraWidth;
       }
 
@@ -140,9 +141,8 @@ if (!Array.prototype.reduce) {
       }
       function setContainerDimensions() {
         // console.log($parentBox.width(), boxExtraWidth, maskExtraWidth);
-        var viewportWidth = $parentBox.width(); //- boxExtraWidth - maskExtraWidth;
+        var viewportWidth = $parentBox.width() - boxExtraWidth; // - maskExtraWidth;
         var viewportHeight = viewportWidth / options.aspectRatio;
-console.log(viewportWidth, viewportHeight);
         $outerMask.width(viewportWidth);
         $innerMask.width(viewportWidth - 10);
         $outerMask.height(viewportHeight);
