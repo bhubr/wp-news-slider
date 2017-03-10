@@ -4,7 +4,7 @@
       {% if options.bullet_style == 'number' %}
       <span class="numbered-btn number {% if loop.first %}active{% endif %}" data-idx="{{ loop.index }}">{{ loop.index }}</span>
       {% else %}
-      <span class="numbered-btn bullet {% if loop.first %}active{% endif %}" data-idx="{{ loop.index }}"></span>
+      {# <span class="numbered-btn bullet {% if loop.first %}active{% endif %}" data-idx="{{ loop.index }}"></span> #}
       {% endif %}
     {% endfor %}
   </p>
