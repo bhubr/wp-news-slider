@@ -5,7 +5,6 @@
 if (!Array.prototype.reduce) {
   Object.defineProperty(Array.prototype, 'reduce', {
     value: function(callback /*, initialValue*/) {
-console.log('using fucking polyfill');
       if (this === null) {
         throw new TypeError('Array.prototype.reduce called on null or undefined');
       }
@@ -66,6 +65,7 @@ console.log('using fucking polyfill');
       var $parentBox = $instance.parent();
       var instanceId = $instance.attr('id');
       var _options =  $instance.data('options');
+      var images =  $instance.data('images');
       var filteredOptions = {
         interval: _options.interval * 1000,
         direction: _options.direction,
@@ -139,6 +139,7 @@ console.log('using fucking polyfill');
           $wrapper.css({ left: (2 - currentImgIndex * thumbWidth) + 'px' });
         }
       }
+
       function setContainerDimensions() {
         // console.log($parentBox.width(), boxExtraWidth, maskExtraWidth);
         var viewportWidth = $parentBox.width() - boxExtraWidth; // - maskExtraWidth;
@@ -182,6 +183,13 @@ console.log('using fucking polyfill');
         $(window).on('resize', setWrapperWidth);
       }
 
+      // console.log(images);
+      $('.thumb-first').removeClass('thumb-first');
+      images.forEach(function (obj) {
+        $('#' + obj.id).replaceWith(obj.thumbnail);
+      });
+
+
       $numberedBtns.click( function(evt) {
         fadeImages( $(this).data('idx') - 1 );
         resetTimer( true );
@@ -206,6 +214,7 @@ console.log('using fucking polyfill');
     // Get instances
     var $instances = $('.wp-sps-wrapper');
     $instances.each(sliderWidget);
+
 
 
   });

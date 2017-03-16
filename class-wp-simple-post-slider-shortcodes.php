@@ -61,7 +61,8 @@ class WP_Simple_Post_Slider_Shortcodes {
 		/* Setup posts before sending them to Twig view */
 		$posts = array_map( function( $post ) {
 			return array(
-				'thumbnail' => "<img id=\"image-{$post->ID}\" class=\"pure-img\" src=\"{$post->guid}\" alt=\"{$post->img_alt}\" />",
+				'thumbnail' => "<img id=\"image-{$post->ID}\" class=\"pure-img\" src=\"{$post->guid}\" alt=\"" . htmlentities( $post->img_alt, ENT_QUOTES ) . "\" />",
+				'id' => "image-{$post->ID}"
 			);
 		}, $recent_posts );
 		if( empty( $args['bullet_style'] ) ) {
@@ -71,9 +72,12 @@ class WP_Simple_Post_Slider_Shortcodes {
 			$args['direction'] = 'vertical';
 		}
 
+		$posts_without_first = array_slice( $posts, 1, count( $posts ) - 1);
+
 		$view = array(
 			'posts'   => $posts,
 			'options' => $args,
+			'jsonPosts' => json_encode( $posts_without_first ),
 			'jsonOptions' => json_encode( $args ),
 		);
 		return $this->twig->render( 'shortcode_img.twig.html', $view );
