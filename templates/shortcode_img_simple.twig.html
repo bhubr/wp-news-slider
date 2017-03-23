@@ -1,0 +1,10 @@
+<div class="slider" data-images='{{jsonPosts|raw}}'>
+  <div class="imageholder">
+    <img alt="placeholder" class="placeholder" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAADCAIAAAA7ljmRAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAQSURBVBhXY/iPBHBx/v8HALuHI92Et/DsAAAAAElFTkSuQmCC" />
+    {% for post in posts %}
+      {% if loop.first %}
+      {{ post.thumbnail|raw }}
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>

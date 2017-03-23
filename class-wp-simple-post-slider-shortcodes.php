@@ -59,9 +59,17 @@ class WP_Simple_Post_Slider_Shortcodes {
 		}
 
 		/* Setup posts before sending them to Twig view */
-		$posts = array_map( function( $post ) {
+		$posts = array_map( function( $post ) use($posts) {
+			$index = array_search($post, $posts);
+			if($index > 0) {
+				$xt_class = $index === count($posts) - 1 ? ' offset-left' : ' offset-right';
+			}
+			else {
+				$xt_class = '';
+			}
 			return array(
-				'thumbnail' => "<img id=\"image-{$post->ID}\" class=\"pure-img\" src=\"{$post->guid}\" alt=\"" . htmlentities( $post->img_alt, ENT_QUOTES ) . "\" />",
+				// 'thumbnail' => "<img id=\"image-{$post->ID}\" class=\"pure-img\" src=\"{$post->guid}\" alt=\"" . htmlentities( $post->img_alt, ENT_QUOTES ) . "\" />",
+				'thumbnail' => "<img id=\"image-{$post->ID}\" class=\"slide{$xt_class}\" src=\"{$post->guid}\" alt=\"" . htmlentities( $post->img_alt, ENT_QUOTES ) . "\" />",
 				'id' => "image-{$post->ID}"
 			);
 		}, $recent_posts );
@@ -80,6 +88,6 @@ class WP_Simple_Post_Slider_Shortcodes {
 			'jsonPosts' => json_encode( $posts_without_first ),
 			'jsonOptions' => json_encode( $args ),
 		);
-		return $this->twig->render( 'shortcode_img.twig.html', $view );
+		return $this->twig->render( 'shortcode_img_simple.twig.html', $view );
 	}
 }
