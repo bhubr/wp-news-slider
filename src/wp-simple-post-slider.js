@@ -24,8 +24,7 @@
 	    var $thumbs = $instance.find('.excerpt');
 	    var $firstThumb = $($thumbs[0]);
 	    var matches = /(\d+)px/.exec($firstThumb.css('padding'));
-	    console.log(matches);
-	    var thumbPadding;
+	    var thumbPadding = 0;
 	    if(matches) {
 	    	thumbPadding = 2 * parseInt(matches[1], 10);
 	    }
