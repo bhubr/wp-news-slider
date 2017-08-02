@@ -57,11 +57,8 @@ if( !function_exists( 'close_non_autoclosing_tags' ) ) {
 
         // close tags
         for ($i = 0 ; $i < $len_opened ; $i++) {
-            if (!in_array($openedtags[$i], $closedtags) ){
-                // if(! in_array($openedtags[$i], $dont_close_tags)) {
-                    // echo "append " . $openedtags[$i] . "\n";
+            if (!in_array($openedtags[$i], $closedtags) ) {
                     $html .= '</'.$openedtags[$i].'>';
-                // }
             } else {
                 unset($closedtags[array_search($openedtags[$i], $closedtags)]);
             }
@@ -74,7 +71,6 @@ if( !function_exists( 'close_non_autoclosing_tags' ) ) {
 if( !function_exists( 'close_and_strip_tags' ) ) {
     function close_and_strip_tags($html_src, $tags_to_strip = array()) {
         $html = htmLawed($html_src);
-// echo $html;
         $autoclosing = get_autoclosing_tags($html);
         // put all opened tags into an array
         // <([a-z]+)(?: .*)?(?<![/|/ ])>
@@ -82,11 +78,8 @@ if( !function_exists( 'close_and_strip_tags' ) ) {
         $openedtags = array_merge($autoclosing, $result[1]);
         $len_opened = count($openedtags);
 
-        // var_dump($openedtags);
         for ($i = 0 ; $i < $len_opened ; $i++) {
-            // echo $openedtags[$i];
             if (in_array($openedtags[$i], $tags_to_strip)){
-                // echo "\nFOUND " . $openedtags[$i] . "\n";
                 if( in_array($openedtags[$i], $autoclosing) !== false ) {
                     $pattern = '/<' . $openedtags[$i] . '[^<]* \/>/';
                     $replace = '';
@@ -95,9 +88,7 @@ if( !function_exists( 'close_and_strip_tags' ) ) {
                     $pattern = '/<' . $openedtags[$i] . '[^>]*>(.*)<\/' . $openedtags[$i] . '>/';
                     $replace = '${1}';
                 }
-                // echo "PATTN:" . $pattern . ",\nBEFORE: $html\n";
                 $html = preg_replace($pattern, $replace, $html);
-                // echo "AFTER:  $html\n";
             }
         }
         return $html;
