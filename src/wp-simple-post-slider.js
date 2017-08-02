@@ -14,7 +14,7 @@
 	  	// Get options
 	  	var options = $.extend({
 	  		interval: 5000,
-	  		direction: 'vertical',
+	  		direction: 'horizontal',
 	  		autoplay: false
 	  	}, filteredOptions);
  			var isVertical = options.direction === 'vertical';
@@ -23,6 +23,12 @@
 	  	var $wrapper = $instance.find('.thumbs-wrapper');
 	    var $thumbs = $instance.find('.excerpt');
 	    var $firstThumb = $($thumbs[0]);
+	    var matches = /(\d+)px/.exec($firstThumb.css('padding'));
+	    console.log(matches);
+	    var thumbPadding;
+	    if(matches) {
+	    	thumbPadding = 2 * parseInt(matches[1], 10);
+	    }
 	    var thumbWidth;
 	    var $numberedBtns = $instance.find('.numbered-btn');
 	    var $playBtn = $instance.find('.icon-play2');
@@ -73,8 +79,8 @@
 	    		thumbsAndHeights.push({ thumb: $thumb, height: thumbHeight + h3Height + 12 });
 	    		// console.log(h3Height, contentHeight, maxHeight, h3Height + contentHeight);
 	    	});
-	    	totalHeight = h3Height + maxHeight + 12;
-	    	// console.log('total', totalHeight);
+	    	totalHeight = h3Height + maxHeight + thumbPadding + 12;
+	    	console.log('total', totalHeight);
 	    	thumbsAndHeights.forEach(function(th) {
 	    		var vertPadding = Math.floor((totalHeight - th.height) / 2);
 	    		console.log('total h', totalHeight, 'this h', th.height, 'vp', vertPadding);
@@ -87,9 +93,9 @@
 
 	    function setWrapperWidth() {
 	    	thumbWidth = $firstThumb.outerWidth();
-	    	console.log($firstThumb.innerWidth(), $firstThumb.outerWidth());
+	    	console.log($firstThumb.innerWidth(), $firstThumb.outerWidth(), $firstThumb.css('padding'));
 	    	$wrapper.css('width', thumbWidth * $thumbs.length);
-	    	// $thumbs.width( thumbWidth );
+	    	$thumbs.width( thumbWidth - thumbPadding );
 	    }
 
 	    function isTimerRunning() {

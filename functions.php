@@ -238,7 +238,7 @@ function post_html_excerpt( $string ) {
     $morepos = strpos( $string, '<!--cuthere-->' );
     $len = ( $morepos ? $morepos + 13 : 245 );
     $string = wpnsw_replace( wts_substr( $string, $len ) );
-    return ( close_and_strip_tags( $string, ['img'] ) . ' [...]' );
+    return ( close_and_strip_tags( $string, ['img'] ) . '&nbsp;[...]' );
 }   
 }
 /* Those functions should be put inside the widget class */

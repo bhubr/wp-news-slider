@@ -1,12 +1,14 @@
 .wp-sps-wrapper img.wp-post-image {
 	float: left;
-	margin: 0 1em 1em;
+  max-width: 35%;
+	margin: 0 0.8rem 1.8rem 0;
 }
 
 .wp-sps-wrapper .thumbs-wrapper {
 	position:absolute;
 }
 .wp-sps-wrapper .thumbs-wrapper h3 {
+  font-size: 14px;
 	margin: 6px 0;
 	padding: 0;
 }
@@ -29,16 +31,20 @@
 }
 .wp-sps-wrapper .thumbs-wrapper div.thumb-content {
 	margin-top: 6px;
+  font-size: 14px;
 }
 .numbered-btn.number.active {
 	color: white;
-	background: black;
+	background: #5DA4A4;
 }
 .numbered-btn {
 	padding: 0 2px;
 }
-.wp-sps-wrapper .thumbs-wrapper .buttons{
-	text-align:left
+.wp-sps-wrapper .thumbs-wrapper .buttons {
+	text-align:left;
+}
+.wp-sps-wrapper .thumbs-wrapper .buttons span {
+  font-size: 12px;
 }
 .wp-sps-wrapper .prev{
 	float:left;
