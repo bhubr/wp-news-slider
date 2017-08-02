@@ -46,11 +46,15 @@
 .wp-sps-wrapper .thumbs-wrapper .buttons span {
   font-size: 12px;
 }
-.wp-sps-wrapper .prev{
+.wp-sps-wrapper .prev {
 	float:left;
 }
-.wp-sps-wrapper .next{
+.wp-sps-wrapper .next {
 	float:right;
+}
+.wp-sps-wrapper .prev,
+.wp-sps-wrapper .next {
+  margin-top: 4px;
 }
 .wp-sps-wrapper .buttons {
 	margin: 0;
