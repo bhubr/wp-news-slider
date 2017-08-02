@@ -10,12 +10,14 @@
 	margin: 6px 0;
 	padding: 0;
 }
-.wp-sps-wrapper .thumbs-wrapper.horizontal .excerpt{
+.wp-sps-wrapper .thumbs-wrapper.horizontal .excerpt {
 	display: inline-block;
+  padding: 10px;
 }
 .wp-sps-wrapper .thumbs-wrapper .excerpt {
 	height: 250px;
 	overflow: hidden;
+  box-sizing: border-box;
 }
 .wp-sps-wrapper .thumbs-wrapper.vertical .excerpt {
   margin-left: 2%;

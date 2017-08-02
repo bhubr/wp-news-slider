@@ -77,8 +77,8 @@
 	    	// console.log('total', totalHeight);
 	    	thumbsAndHeights.forEach(function(th) {
 	    		var vertPadding = Math.floor((totalHeight - th.height) / 2);
-	    		// console.log('total h', totalHeight, 'this h', th.height, 'vp', vertPadding);
-	    		th.thumb.css('padding', vertPadding + 'px 0');
+	    		console.log('total h', totalHeight, 'this h', th.height, 'vp', vertPadding);
+	    		// th.thumb.css('padding', vertPadding + 'px 0');
 	    	});
 
 	    	$instance.find('.mask').css('height', totalHeight);
@@ -87,8 +87,9 @@
 
 	    function setWrapperWidth() {
 	    	thumbWidth = $firstThumb.outerWidth();
+	    	console.log($firstThumb.innerWidth(), $firstThumb.outerWidth());
 	    	$wrapper.css('width', thumbWidth * $thumbs.length);
-	    	$thumbs.width( thumbWidth );
+	    	// $thumbs.width( thumbWidth );
 	    }
 
 	    function isTimerRunning() {
