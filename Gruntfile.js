@@ -25,7 +25,10 @@ module.exports = function(grunt) {
           archive: 'wp-simple-post-slider.zip'
         },
         files: [
-          {src: ['assets/**', 'vendor/**', 'templates/*', 'compilation_cache/*', 'languages/*', '*.php', 'tests'], dest: 'wp-simple-post-slider'}, // includes files in path
+          {
+            src: ['assets/**', 'vendor/**', 'templates/*', 'compilation_cache/*', 'languages/*', '*.php', 'tests'],
+            dest: 'wp-simple-post-slider'
+          } // includes files in path
         ]
       }
     },
