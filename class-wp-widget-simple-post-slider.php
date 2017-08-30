@@ -2,7 +2,6 @@
 /**
  * Class for the actual Post Slider Widget
  */
-require_once 'vendor/autoload.php';
 require_once 'class-twig-wordpress-widget.php';
 
 /**

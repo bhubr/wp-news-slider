@@ -116,7 +116,8 @@
         // console.log('horizWrapperWidth/thumbWidthPercent', horizWrapperWidth, thumbWidthPercent);
         $wrapper.css('width', horizWrapperWidth);
         $thumbs.css('width', thumbWidthPercent);
-        thumbWidth = $firstThumb.width();
+        console.log('thumb padding', $firstThumb);
+        thumbWidth = $firstThumb.width() + 20;
         // console.log('thumb width px', thumbWidth);
 
       //   thumbWidth = $firstThumb.outerWidth();
