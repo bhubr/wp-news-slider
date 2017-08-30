@@ -15,6 +15,7 @@
 .wp-sps-wrapper .thumbs-wrapper.horizontal .excerpt {
 	display: inline-block;
   height: auto;
+  vertical-align: top;
 }
 .wp-sps-wrapper .thumbs-wrapper .excerpt {
 	/*height: 250px;*/
@@ -76,11 +77,11 @@
   background-color: #555;
 }
 .wp-sps-wrapper .mask {
-	border-top:1px solid #ccc;
-	border-bottom:1px solid #ccc;
-	position:relative;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	position: relative;
 	width: 100%;
-	height: 250px;
+	/*height: 250px;*/
 	overflow: hidden;
 }
 

@@ -66,7 +66,7 @@
           $wrapper.animate({ top: (- currentImgIndex * totalHeight) + 'px' }, 350);
         }
         else {
-          console.log('animate', currentImgIndex, thumbWidth, (- currentImgIndex * thumbWidth) + 'px');
+          // console.log('animate', currentImgIndex, thumbWidth, (- currentImgIndex * thumbWidth) + 'px');
           $wrapper.animate({ left: (- currentImgIndex * thumbWidth) + 'px' }, 350);
         }
       }
@@ -78,7 +78,15 @@
         // var maxHeight = Math.max(imgHeight, contentHeight);
         // thumbHeight = 10 + imgHeight + labelHeight;
         // console.log('heights', imgHeight, contentHeight, maxHeight, thumbHeight); //, contentHeight);
-        thumbHeight = $firstThumb.height();
+        thumbHeight = 0;// $firstThumb.height();
+        $thumbs.each(function(index, thumbEl) {
+          var $thumb = $(thumbEl);
+          var h = $thumb.height();
+          if(h > thumbHeight) {
+            thumbHeight = h;
+          }
+        });
+        // console.log('after map', thumbHeight);
         $mask.css('height', thumbHeight + 'px');
         // var maxHeight = 0;
         // var thumbsAndHeights = [];
@@ -105,11 +113,11 @@
 
       function setWrapperWidth() {
         thumbWidthPercent = (100.0 / numThumbs).toFixed(2) + '%';
-        console.log('horizWrapperWidth/thumbWidthPercent', horizWrapperWidth, thumbWidthPercent);
+        // console.log('horizWrapperWidth/thumbWidthPercent', horizWrapperWidth, thumbWidthPercent);
         $wrapper.css('width', horizWrapperWidth);
         $thumbs.css('width', thumbWidthPercent);
         thumbWidth = $firstThumb.width();
-        console.log('thumb width px', thumbWidth);
+        // console.log('thumb width px', thumbWidth);
 
       //   thumbWidth = $firstThumb.outerWidth();
       //   console.log('wrapper width inner/outer/padding', $firstThumb.innerWidth(), $firstThumb.outerWidth(), $firstThumb.css('padding'));
