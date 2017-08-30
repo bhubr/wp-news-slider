@@ -15,7 +15,6 @@ function wpnsw_mceplugin_register($plugin_array)
     return $plugin_array;
 }
 
-
 /**
  * Close all open xhtml tags at the end of the string
  * Sources: http://stackoverflow.com/questions/3810230/close-open-html-tags-in-a-string

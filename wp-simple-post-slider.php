@@ -20,6 +20,5 @@ add_action( 'wp_print_scripts', 'wpnsw_load_scripts' );
 add_action( 'get_header', 'wpnsw_load_styles' );
 add_action( 'init', 'wpnsw_localize' );
 
-add_action("widgets_init", array('WP_Widget_Simple_Post_Slider', 'register'));
-
+add_action( 'widgets_init', array( 'WP_Widget_Simple_Post_Slider', 'register' ) );
 ?>
