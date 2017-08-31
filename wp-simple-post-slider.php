@@ -4,7 +4,7 @@ Plugin Name: Simple Post Slider Widget
 Plugin URI: https://bhubr.eu/projects/wordpress-post-slider/
 Description: Display excerpts from recent posts (or other post types) in a widget
 Author: Benoît Hubert
-Version: 0.9.10
+Version: 1.0.0
 Author URI: https://bhubr.eu
 Copyright 2010-2017 Benoit Hubert
 */ 
@@ -12,8 +12,8 @@ require_once 'vendor/autoload.php';
 require 'class-wp-widget-simple-post-slider.php';
 require 'functions.php';
 
-add_filter('mce_external_plugins', "wpnsw_mceplugin_register");
-add_filter('mce_buttons', 'wpnsw_mceplugin_add_button', 0);
+// add_filter('mce_external_plugins', "wpnsw_mceplugin_register");
+// add_filter('mce_buttons', 'wpnsw_mceplugin_add_button', 0);
 
 
 add_action( 'wp_print_scripts', 'wpnsw_load_scripts' );
